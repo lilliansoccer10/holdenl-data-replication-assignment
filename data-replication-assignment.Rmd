@@ -25,7 +25,7 @@ my_data
 ```
 ```{r}
 Distance_moved_means <- my_data %>%  
-  group_by(Tree_sp) %>%  
+  group_by(Forest_type, Tree_sp) %>%  
   summarize(Distance_moved_means=mean(Distance_moved_m), sd_Distance_moved=sd(Distance_moved_m),  
             N_N=n(),  
             se=sd_Distance_moved/sqrt(N_N),  
@@ -37,7 +37,7 @@ Distance_moved_means
 
 
 ```{r}
-ggplot(Distance_moved_means, aes(x=Tree_sp, y=Distance_moved_means)) +  
+ggplot(Distance_moved_means, aes(x=Forest_type, y=Distance_moved_means)) +  
 geom_bar(stat="identity") +  
 geom_errorbar(aes(ymin=lower_limit, ymax=upper_limit))
 ```
