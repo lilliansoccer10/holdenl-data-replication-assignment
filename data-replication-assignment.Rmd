@@ -20,7 +20,7 @@ library(dplyr)
 
 ```{r}
 # xls files
-my_data <- read_csv("/Users/lilyholden/Desktop/3_Distance_moved.csv", show_col_types = FALSE)
+my_data <- read_csv("/Users/lilyholden/Desktop/3_Distance_moved.csv", show_col_types = TRUE)
 my_data
 ```
 ```{r}
@@ -30,10 +30,11 @@ Distance_moved_means <- my_data %>%
             N_N=n(),  
             se=sd_Distance_moved/sqrt(N_N),  
             upper_limit=Distance_moved_means+se,  
-            lower_limit=Distance_moved_means-se  
+            lower_limit=Distance_moved_means-se
   )  
 Distance_moved_means
 ```
+
 
 ```{r}
 ggplot(Distance_moved_means, aes(x=Tree_sp, y=Distance_moved_means)) +  
