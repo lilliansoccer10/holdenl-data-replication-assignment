@@ -11,11 +11,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 # Install the required package
-install.packages("readr")
+#install.packages("readr")
 # Load the installed Package
 library(readr)
 library(ggplot2)
 library(dplyr)
+library(shiny)
 ```
 
 ```{r}
@@ -25,7 +26,7 @@ my_data
 ```
 ```{r}
 Distance_moved_means <- my_data %>%  
-  group_by(Forest_type, Tree_sp) %>%  
+  group_by(Tree_sp, Forest_type) %>%  
   summarize(Distance_moved_means=mean(Distance_moved_m), sd_Distance_moved=sd(Distance_moved_m),  
             N_N=n(),  
             se=sd_Distance_moved/sqrt(N_N),  
@@ -37,8 +38,20 @@ Distance_moved_means
 
 
 ```{r}
-ggplot(Distance_moved_means, aes(x=Forest_type, y=Distance_moved_means)) +  
+ggplot(Distance_moved_means, aes(x=Tree_sp, y=Distance_moved_means)) +  
 geom_bar(stat="identity") +  
 geom_errorbar(aes(ymin=lower_limit, ymax=upper_limit))
 ```
 
+
+
+```{r}
+g <- ggplot() + 
+geom_col(data = Distance_moved_means, mapping = aes(x = Tree_sp, y = Distance_moved_means, group = , fill = Forest_type), colour = "black", position = "dodge") +
+geom_errorbar (position=position_dodge(width=0.9), colour="black")
+g
+```
+g <- g + geom_errorbar(aes(ymin=lower_limit, ymax=upper_limit))
+g
+
+geom_errorbar (position=position_dodge(width=0.9), colour="black") +
