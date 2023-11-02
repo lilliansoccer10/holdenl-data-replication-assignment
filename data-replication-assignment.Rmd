@@ -47,11 +47,14 @@ geom_errorbar(aes(ymin=lower_limit, ymax=upper_limit))
 
 ```{r}
 g <- ggplot() + 
-geom_col(data = Distance_moved_means, mapping = aes(x = Tree_sp, y = Distance_moved_means, group = , fill = Forest_type), colour = "black", position = "dodge") +
-geom_errorbar (position=position_dodge(width=0.9), colour="black")
+geom_col(data = Distance_moved_means, mapping = aes(x = Tree_sp, y = Distance_moved_means, group = , fill = Forest_type), colour = "black", position = "dodge") 
 g
 ```
 g <- g + geom_errorbar(aes(ymin=lower_limit, ymax=upper_limit))
 g
 
+geom_errorbar(aes(x=Tree_sp, ymin=mean(Percentage_killing)-SD, ymax=mean(Percentage_killing)+SD), width=.2, position=position_dodge(.9))
+
 geom_errorbar (position=position_dodge(width=0.9), colour="black") +
+
+geom_errorbar (position=position_dodge(width=0.9), colour="black")
