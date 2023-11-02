@@ -6,13 +6,12 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, comment = "##", prompt = TRUE,
++     tidy = TRUE, tidy.opts = list(width.cutoff = 75), fig.path = "img/")
 ```
 
+### Load the Required Packages
 ```{r}
-# Install the required package
-#install.packages("readr")
-# Load the installed Package
 library(readr)
 library(ggplot2)
 library(dplyr)
