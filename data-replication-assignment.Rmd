@@ -25,7 +25,7 @@ my_data <- read_csv("/Users/lilyholden/Desktop/3_Distance_moved.csv", show_col_t
 my_data
 ```
 ```{r}
-Distance_moved_means <- my_data %>%  
+new_data <- my_data %>%  
   group_by(Tree_sp, Forest_type) %>%  
   summarize(Distance_moved_means=mean(Distance_moved_m), sd_Distance_moved=sd(Distance_moved_m),  
             N_N=n(),  
@@ -33,21 +33,14 @@ Distance_moved_means <- my_data %>%
             upper_limit=Distance_moved_means+se,  
             lower_limit=Distance_moved_means-se
   )  
-Distance_moved_means
-```
-
-
-```{r}
-ggplot(Distance_moved_means, aes(x=Tree_sp, y=Distance_moved_means)) +  
-geom_bar(stat="identity") +  
-geom_errorbar(aes(ymin=lower_limit, ymax=upper_limit))
+new_data
 ```
 
 
 
 ```{r}
 g <- ggplot() + 
-geom_col(data = Distance_moved_means, mapping = aes(x = Tree_sp, y = Distance_moved_means, group = , fill = Forest_type), colour = "black", position = "dodge") 
+geom_col(data = new_data, mapping = aes(x = Tree_sp, y = Distance_moved_means, group = , fill = Forest_type), colour = "black", position = "dodge") 
 g
 ```
 g <- g + geom_errorbar(aes(ymin=lower_limit, ymax=upper_limit))
