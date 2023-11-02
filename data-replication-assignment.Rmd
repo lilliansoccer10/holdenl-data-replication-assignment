@@ -35,19 +35,16 @@ new_data <- my_data %>%
   )  
 new_data
 ```
-
+```{r}
+upper_limit <- new_data$upper_limit
+lower_limit <- new_data$lower_limit
+```
 
 
 ```{r}
 g <- ggplot() + 
-geom_col(data = new_data, mapping = aes(x = Tree_sp, y = Distance_moved_means, group = , fill = Forest_type), colour = "black", position = "dodge") 
+geom_col(data = new_data, mapping = aes(x = Tree_sp, y = Distance_moved_means, group=Forest_type, fill = Forest_type), colour = "black", position = "dodge") +
+geom_errorbar(data = new_data, aes(x=Tree_sp, ymin = lower_limit, ymax = upper_limit, fill= Forest_type), width=.2, position=position_dodge(.9)) 
 g
 ```
-g <- g + geom_errorbar(aes(ymin=lower_limit, ymax=upper_limit))
-g
 
-geom_errorbar(aes(x=Tree_sp, ymin=mean(Percentage_killing)-SD, ymax=mean(Percentage_killing)+SD), width=.2, position=position_dodge(.9))
-
-geom_errorbar (position=position_dodge(width=0.9), colour="black") +
-
-geom_errorbar (position=position_dodge(width=0.9), colour="black")
