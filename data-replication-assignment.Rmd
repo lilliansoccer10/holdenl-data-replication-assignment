@@ -19,12 +19,18 @@ library(dplyr)
 library(shiny)
 ```
 
+## Loading in the Data Set 
 ```{r}
-# xls files
 my_data <- read_csv("/Users/lilyholden/Desktop/3_Distance_moved.csv", show_col_types = TRUE)
 my_data
 ```
 ```{r}
+#Insert the Figure You are Trying to Replicate
+```
+
+## Organizing The Data Set with Piping 
+```{r}
+#Add Columns that Expresses Mean, Standard Deviation, Standard Error, Upper Limit, and Lower Limit and Organizes it by Tree Species and Forest Type
 new_data <- my_data %>%  
   group_by(Tree_sp, Forest_type) %>%  
   summarize(Distance_moved_means=mean(Distance_moved_m), sd_Distance_moved=sd(Distance_moved_m),  
@@ -36,12 +42,13 @@ new_data <- my_data %>%
 new_data
 ```
 ```{r}
+#Set What Your Upper Limit and Lower Limit within the Data Set Are in Order to Plot Error Bars ??? Do I need to do this? I don't think I do... 
 upper_limit <- new_data$upper_limit
 lower_limit <- new_data$lower_limit
 ```
 
-
 ```{r}
+#Replicate the Figure 
 g <- ggplot() + 
 geom_col(data = new_data, mapping = aes(x = Tree_sp, y = Distance_moved_means, group=Forest_type, fill = Forest_type), colour = "black", position = "dodge") +
 geom_errorbar(data = new_data, aes(x=Tree_sp, ymin = lower_limit, ymax = upper_limit, fill= Forest_type), width=.2, position=position_dodge(.9)) 
