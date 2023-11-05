@@ -67,6 +67,6 @@ data
 #Add Columns that Expresses Mean and Standard Deviation
 dataII <- data %>%  
   group_by(Tree_sp) %>%  
-  summarize(CT_trap_nights_mean=mean(CT_trap_nights), sd_CT_trap_nights=sd(CT_trap_nights_mean), Visitor_species_type=Body_size)
+  summarize(CT_trap_nights_mean=mean(CT_trap_nights), sd_CT_trap_nights=sd(CT_trap_nights_mean), Visitor_species_type=Body_size, Num_visits)
 dataII
 ```
