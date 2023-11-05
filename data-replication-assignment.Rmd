@@ -59,14 +59,14 @@ g
 ### Replicating A Descriptive Statistical Analysis
 
 ```{r}
-data <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Visits_seedpredators_CT.csv", show_col_types = TRUE)
+data <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Visits_seedpredators_CT.csv", show_col_types = FALSE)
 data
 ```
 
 ```{r}
 #Add Columns that Expresses Mean and Standard Deviation
 dataII <- data %>%  
-  group_by(Tree_sp) %>%  
-  summarize(CT_trap_nights_mean=mean(CT_trap_nights), sd_CT_trap_nights=sd(CT_trap_nights_mean), Visitor_species_type=Body_size, Num_visits)
+  group_by(Tree_sp, Forest_type) %>%  
+  reframe(Total=CT_trap_nights, Min=min(CT_trap_nights), Max=max(CT_trap_nights), Visitor_species_type=Body_size, Total_visits=Num_visits, Mean_trap_nights=mean(CT_trap_nights), Sd_trap_nights=sd(CT_trap_nights))
 dataII
 ```
