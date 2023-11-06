@@ -81,7 +81,7 @@ dataII
 
 
 ```{r}
-dataIII <- dataII %>% group_by(Tree_sp, Forest_type) %>% 
+dataIII <- dataII %>% group_by(Tree_sp) %>% 
 count(vars=c("Number_of_trees")) 
 dataIII
 ```
@@ -89,7 +89,12 @@ dataIII
 
 
 ```{r}
-dataIII <- dataII %>% group_by(Tree_sp, Visitor_species_type) %>% summarize_if(is.numeric, sum)
+dataIII <- 
+  dataII %>%
+  group_by(Tree_sp, Forest_type) %>%
+  summarize(count_distinct = n_distinct(Number_of_trees))
 dataIII
 ```
+
+summarize_if(is.numeric, sum)
 
