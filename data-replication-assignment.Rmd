@@ -70,12 +70,20 @@ data
 ```{r}
 #Add Columns that Expresses Mean and Standard Deviation
 dataII <- data %>%  
-  group_by(Tree_sp) %>%  
-  reframe(Number_of_trees=length(Tree_id~Forest_type),Total=CT_trap_nights, Min=min(CT_trap_nights), Max=max(CT_trap_nights), Visitor_species_type=Body_size, Total_visits=Num_visits, Mean_trap_nights=mean(CT_trap_nights)^-1, Sd_trap_nights=sd(CT_trap_nights)^-1)
+  group_by(Tree_sp, Forest_type) %>%  
+  reframe(Tree_id,Total=CT_trap_nights, Min=min(CT_trap_nights), Max=max(CT_trap_nights), Visitor_species_type=Body_size, Total_visits=Num_visits, Mean_trap_nights=mean(CT_trap_nights)^-1, Sd_trap_nights=sd(CT_trap_nights)^-1)
 dataII
 ```
 ```{r}
-dataIII <- dataII %>% group_by(Tree_sp, Visitor_species_type) %>% summarize_if(is.numeric, sum)
+dataIIII <- dataII %>%  
+  group_by(Tree_id) %>%  
+  mutate(Number_of_trees=n())
+dataIIII
+```
+
+
+```{r}
+dataIII <- dataIIII %>% group_by(Tree_sp, Visitor_species_type, Number_of_trees) %>% summarize_if(is.numeric, sum)
 dataIII
 ```
 
