@@ -5,17 +5,14 @@ date: "2023-10-14"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, comment = "##", prompt = TRUE,
-+     tidy = TRUE, tidy.opts = list(width.cutoff = 75), fig.path = "img/")
-```
-
 ### Load the Required Packages
-```{r}
+```{r warning=FALSE}
 library(readr)
 library(ggplot2)
+library(plyr)
 library(dplyr)
 library(shiny)
+library(tidyverse)
 ```
 
 
@@ -62,28 +59,37 @@ g
 
 ### Replicating A Descriptive Statistical Analysis
 
+```{r figure, echo=FALSE, fig.align='center', out.width='25%'}
+knitr::include_graphics('~/Documents/GitHub/holdenl-data-replication-assignment/Descriptive_Analysis.png')
+```
+
 ```{r}
 data <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Visits_seedpredators_CT.csv", show_col_types = FALSE)
 data
 ```
 
+
 ```{r}
 #Add Columns that Expresses Mean and Standard Deviation
 dataII <- data %>%  
   group_by(Tree_sp, Forest_type) %>%  
-  reframe(Tree_id,Total=CT_trap_nights, Min=min(CT_trap_nights), Max=max(CT_trap_nights), Visitor_species_type=Body_size, Total_visits=Num_visits, Mean_trap_nights=mean(CT_trap_nights)^-1, Sd_trap_nights=sd(CT_trap_nights)^-1)
+  reframe(Number_of_trees=Tree_id,Total=CT_trap_nights, Min=min(CT_trap_nights), Max=max(CT_trap_nights), Visitor_species_type=Body_size, Total_visits=Num_visits, Mean_trap_nights=mean(CT_trap_nights)^-1, Sd_trap_nights=sd(CT_trap_nights)^-1)
 dataII
 ```
+
+##Attempting to Get the Number of Trees???
+
+
 ```{r}
-dataIIII <- dataII %>%  
-  group_by(Tree_id) %>%  
-  mutate(Number_of_trees=n())
-dataIIII
+dataIII <- dataII %>% group_by(Tree_sp, Forest_type) %>% 
+count(vars=c("Number_of_trees")) 
+dataIII
 ```
 
 
+
 ```{r}
-dataIII <- dataIIII %>% group_by(Tree_sp, Visitor_species_type, Number_of_trees) %>% summarize_if(is.numeric, sum)
+dataIII <- dataII %>% group_by(Tree_sp, Visitor_species_type) %>% summarize_if(is.numeric, sum)
 dataIII
 ```
 
