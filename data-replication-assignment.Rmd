@@ -108,10 +108,4 @@ dataVI <-
   summarize(Total_visits=sum(Total_visits))
 dataVI
 ```
-```{r}
-dataVII <- 
-  dataII %>%
-  group_by(Tree_sp) %>%
-  summarize(Total =sum(Total))
-dataVII
-```
+
