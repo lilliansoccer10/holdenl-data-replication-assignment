@@ -109,3 +109,28 @@ dataVI <-
 dataVI
 ```
 
+
+##GLM 
+```{r}
+install.packages("vegan")
+library(vegan)
+```
+```{r warning=FALSE}
+library(tidyverse)
+library(MuMIn)
+library(lme4)
+```
+
+```{r figure, echo=FALSE, fig.align='center', out.width='25%'}
+knitr::include_graphics('~/Documents/GitHub/holdenl-data-replication-assignment/GLMM.png')
+```
+
+```{r}
+glmdata <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/2_Seed_fate.csv", show_col_types = FALSE)
+glmdata
+```
+
+```{r}
+lme <- glmer(data=glmdata, Vertebrate_pred ~ Forest_type*Seed_size + Forest_type + Seed_size + (1 | Tree_sp), family = "poisson")
+summary(lme, corr=FALSE)
+```
