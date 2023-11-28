@@ -1,7 +1,7 @@
 ---
 title: "Analysis Replication"
 author: "Lillian Holden"
-date: "2023-10-14"
+date: "Due Decemeber 14th"
 output: html_document
 editor_options: 
   chunk_output_type: inline
@@ -16,7 +16,14 @@ library(dplyr)
 library(shiny)
 library(tidyverse)
 ```
+Article Title: Seed fates of four rainforest tree species in the fragmented forests of
+Anamalais in the southern Western Ghats, India 
+Article By: Abhishek Gopala, Divya Mudappa, TR Shankar Raman, Rohit Naniwadekar
+<br>
+
 Introduction 
+Seed predation is key in controlling plant population and the structure within forests. Forest fragmentation and habitat loss is directly correlated with seed predation and altered tree recruitment. This article examines four different rainforest tree species and the influence of forest type: benchmark N=3, fragmented N=5, and seed size on the proportion of seeds: 1) predated by vertebrate seed predators, 2) predated by
+invertebrate seed predators, and 3) removed by vertebrate seed predators. The seeds were tracked by putting seeds in four 1x1 meter plots under each canopy type. Camera traps were placed under a subset of trees N=29 and there was a total of N=712 trap nights. Nine species of seed predators was recorded and it is noted that they differed between tree species. This study brings forth the idea that seed predation can alter regeneration patterns and alter adult tree communities in fragmented forests. 
 
 
 ### Replicating a Figure - The Figure Being Replicated 
