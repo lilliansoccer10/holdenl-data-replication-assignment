@@ -8,7 +8,7 @@ editor_options:
 ---
 
 ### Load the Required Packages
-```{r warning=FALSE}
+```{r message=FALSE, warning=FALSE}
 library(readr)
 library(ggplot2)
 #library(plyr)
@@ -16,6 +16,7 @@ library(dplyr)
 library(shiny)
 library(tidyverse)
 ```
+Introduction 
 
 
 ### Replicating a Figure - The Figure Being Replicated 
@@ -25,11 +26,8 @@ knitr::include_graphics('~/Documents/GitHub/holdenl-data-replication-assignment/
 
 ## Loading in the Data Set 
 ```{r}
-my_data <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Distance_moved.csv", show_col_types = TRUE)
-my_data
-```
-```{r}
-#Insert the Figure You are Trying to Replicate
+my_data <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Distance_moved.csv", show_col_types = FALSE)
+head(my_data)
 ```
 
 ## Organizing The Data Set with Piping 
@@ -43,7 +41,7 @@ new_data <- my_data %>%
             upper_limit=Distance_moved_means+se,  
             lower_limit=Distance_moved_means-se
   )  
-new_data
+head(new_data)
 ```
 ```{r}
 #Set What Your Upper Limit and Lower Limit within the Data Set Are in Order to Plot Error Bars ??? Do I need to do this? I don't think I do... 
@@ -61,13 +59,11 @@ g
 
 ### Replicating A Descriptive Statistical Analysis
 
-```{r figure, echo=FALSE, fig.align='center', out.width='25%'}
-knitr::include_graphics('~/Documents/GitHub/holdenl-data-replication-assignment/Descriptive_Analysis.png')
-```
+
 
 ```{r}
 data <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Visits_seedpredators_CT.csv", show_col_types = FALSE)
-data
+head(data)
 ```
 
 
@@ -76,7 +72,7 @@ data
 dataII <- data %>%  
   group_by(Tree_sp, Forest_type) %>%  
   summarise(Number_of_trees=Tree_id,Total=CT_trap_nights, Min=min(CT_trap_nights), Max=max(CT_trap_nights), Visitor_species_type=Body_size, Total_visits=Num_visits, Mean_trap_nights=mean(CT_trap_nights)^-1, Sd_trap_nights=sd(CT_trap_nights)^-1)
-dataII
+head(dataII)
 ```
 
 
@@ -122,10 +118,6 @@ w
 ```
 
 ##GLM 
-```{r warning=FALSE}
-#install.packages("vegan")
-library(vegan)
-```
 
 ```{r warning=FALSE}
 library(tidyverse)
