@@ -7,6 +7,10 @@ editor_options:
   chunk_output_type: inline
 ---
 
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, comment = "##", prompt = TRUE,
++     tidy = TRUE, tidy.opts = list(width.cutoff = 75), fig.path = "img/") -- ask about
+
+
 ### Load the Required Packages
 ```{r message=FALSE, warning=FALSE}
 library(readr)
@@ -25,6 +29,8 @@ Introduction
 Seed predation is key in controlling plant population and the structure within forests. Forest fragmentation and habitat loss is directly correlated with seed predation and altered tree recruitment. This article examines four different rainforest tree species and the influence of forest type: benchmark N=3, fragmented N=5, and seed size on the proportion of seeds: 1) predated by vertebrate seed predators, 2) predated by
 invertebrate seed predators, and 3) removed by vertebrate seed predators. The seeds were tracked by putting seeds in four 1x1 meter plots under each canopy type. Camera traps were placed under a subset of trees N=29 and there was a total of N=712 trap nights. Nine species of seed predators was recorded and it is noted that they differed between tree species. This study brings forth the idea that seed predation can alter regeneration patterns and alter adult tree communities in fragmented forests. 
 
+
+![]("img/Figure.png") -- ask about 
 
 ### Replicating a Figure - The Figure Being Replicated 
 ```{r figure, echo=FALSE, fig.align='center', out.width='25%'}
@@ -65,8 +71,9 @@ g
 ```
 
 ### Replicating A Descriptive Statistical Analysis
-
-
+```{r figure, echo=FALSE, fig.align='center', out.width='25%'}
+knitr::include_graphics('~/Documents/GitHub/holdenl-data-replication-assignment/Descriptive_Analysis.png')
+```
 
 ```{r}
 data <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Visits_seedpredators_CT.csv", show_col_types = FALSE)
@@ -78,7 +85,7 @@ head(data)
 #Add Columns that Expresses Mean and Standard Deviation
 dataII <- data %>%  
   group_by(Tree_sp, Forest_type) %>%  
-  summarise(Number_of_trees=Tree_id,Total=CT_trap_nights, Min=min(CT_trap_nights), Max=max(CT_trap_nights), Visitor_species_type=Body_size, Total_visits=Num_visits, Mean_trap_nights=mean(CT_trap_nights)^-1, Sd_trap_nights=sd(CT_trap_nights)^-1)
+  summarise(Number_of_trees=Tree_id,Total=CT_trap_nights, Min=min(CT_trap_nights), Max=max(CT_trap_nights), Visitor_species_type=Body_size, Total_visits=Num_visits)
 head(dataII)
 ```
 
@@ -116,9 +123,19 @@ dataVI
 ```
 
 ```{r}
+dataVII <- 
+  dataII %>%
+  group_by(Tree_sp) %>%
+  summarize(Total=sum(unique(Total)))
+dataVII
+```
+
+
+```{r}
 v <- merge(dataIII, dataIIII)
 v
 ```
+
 ```{r}
 w <- merge(v, dataV)
 w
