@@ -124,12 +124,12 @@ dataVI
 
 ```{r}
 dataVII <- 
-  dataII %>%
+  data %>%
   group_by(Tree_sp) %>%
-  summarize(Total=sum(unique(Total)))
+  summarize(Total=sum(unique(CT_trap_nights)))
 dataVII
 ```
-
+Canarium and Persea match, but Heynea and Myristica do not, for some reason. 
 
 ```{r}
 v <- merge(dataIII, dataIIII)
