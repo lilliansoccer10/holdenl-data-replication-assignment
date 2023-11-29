@@ -131,6 +131,7 @@ dataVII
 ```
 Canarium and Persea match, but Heynea and Myristica do not, for some reason. 
 
+### Merging Some of The Organized Data
 ```{r}
 v <- merge(dataIII, dataIIII)
 v
