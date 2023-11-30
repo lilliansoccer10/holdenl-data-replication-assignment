@@ -7,8 +7,6 @@ editor_options:
   chunk_output_type: inline
 ---
 
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, comment = "##", prompt = TRUE,
-+     tidy = TRUE, tidy.opts = list(width.cutoff = 75), fig.path = "img/") -- ask about
 
 
 ### Load the Required Packages
@@ -30,7 +28,7 @@ Seed predation is key in controlling plant population and the structure within f
 invertebrate seed predators, and 3) removed by vertebrate seed predators. The seeds were tracked by putting seeds in four 1x1 meter plots under each canopy type. Camera traps were placed under a subset of trees N=29 and there was a total of N=712 trap nights. Nine species of seed predators was recorded and it is noted that they differed between tree species. This study brings forth the idea that seed predation can alter regeneration patterns and alter adult tree communities in fragmented forests. 
 
 
-![]("img/Figure.png") -- ask about 
+
 
 ### Replicating a Figure - The Figure Being Replicated 
 ```{r figure, echo=FALSE, fig.align='center', out.width='25%'}
