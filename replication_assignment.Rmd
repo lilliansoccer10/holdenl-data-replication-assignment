@@ -162,12 +162,12 @@ proportiondata <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-repl
 proportiondata
 ```
 ```{r}
-newdata <- merge(glmdata, proportiondata, by="Tree_sp") 
+newdata <- merge(glmdata, proportiondata, by="Tree_sp")
 newdata
 ```
 
 ```{r}
-lme <- glmer(data=newdata, Vertebrate_prop + Forest_type + Seed_size + (1 | Tree_sp), family = "poisson")
+lme <- glmer(data=newdata, proportiondata$Overall~ + Forest_type + Seed_size + (1 | Tree_sp), family = "poisson")
 summary(lme, corr=FALSE)
 ```
 
