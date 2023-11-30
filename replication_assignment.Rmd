@@ -167,11 +167,27 @@ newdata
 ```
 
 ```{r}
-lme <- glmer(data=newdata, ~ + Forest_type + Seed_size + (1 | Tree_sp), family = "poisson")
+gsf <- glmer(Vertebrate_prop~ Forest_type*Seed_size + (1 | Tree_sp), data = newdata  ,family = "binomial", control = glmerControl(optimizer = "bobyqa"))
+```
+lmer <- glmer()
+```{r}
+lme <- glmer(Vertebrate_prop ~ Forest_type*Seed_size + (1 | Tree_sp), family = "poisson", data=newdata)
+summary(lme, corr=FALSE)
+```
+CORRECT is below????
+
+
+```{r}
+lme <- glmer(data=glmdata, Vertebrate_pred~Forest_type*Seed_size + (1 | Tree_sp), family = "poisson")
 summary(lme, corr=FALSE)
 ```
 
 ```{r}
-lme <- glmer(data=glmdata, Vertebrate_pred~Forest_type*Seed_size +Forest_type + Seed_size + (1 | Tree_sp), family = "poisson")
+lme <- glmer(data=glmdata, Invertebrate_pred~Forest_type*Seed_size + (1 | Tree_sp), family = "poisson")
+summary(lme, corr=FALSE)
+```
+
+```{r}
+lme <- glmer(data=glmdata, Removed~Forest_type*Seed_size + (1 | Tree_sp), family = "poisson")
 summary(lme, corr=FALSE)
 ```
