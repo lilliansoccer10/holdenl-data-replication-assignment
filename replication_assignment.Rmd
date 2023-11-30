@@ -158,10 +158,20 @@ glmdata
 ```
 
 ```{r}
-lme <- glmer(data=glmdata, Vertebrate_pred ~ Forest_type*Seed_size + Forest_type + Seed_size + (1 | Tree_sp), family = "poisson")
+proportiondata <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Proportions.csv", show_col_types = FALSE)
+proportiondata
+```
+```{r}
+newdata <- merge(glmdata, proportiondata, by="Tree_sp") 
+newdata
+```
+
+```{r}
+lme <- glmer(data=newdata, Vertebrate_prop + Forest_type + Seed_size + (1 | Tree_sp), family = "poisson")
 summary(lme, corr=FALSE)
 ```
 
-
-
-
+```{r}
+lme <- glmer(data=glmdata, Vertebrate_pred~Forest_type*Seed_size +Forest_type + Seed_size + (1 | Tree_sp), family = "poisson")
+summary(lme, corr=FALSE)
+```
