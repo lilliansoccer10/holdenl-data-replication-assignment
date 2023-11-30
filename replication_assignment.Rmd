@@ -167,7 +167,7 @@ newdata
 ```
 
 ```{r}
-lme <- glmer(data=newdata, proportiondata$Overall~ + Forest_type + Seed_size + (1 | Tree_sp), family = "poisson")
+lme <- glmer(data=newdata, ~ + Forest_type + Seed_size + (1 | Tree_sp), family = "poisson")
 summary(lme, corr=FALSE)
 ```
 
