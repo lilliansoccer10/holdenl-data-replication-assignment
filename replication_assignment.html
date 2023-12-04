@@ -1813,12 +1813,13 @@ head(newdata)</code></pre>
 </div>
 <div id="replicating-the-glmm-for-each-model" class="section level3">
 <h3>Replicating the GLMM for Each Model</h3>
-<pre class="r"><code>lme &lt;- glmer(data=glmdata, Vertebrate_pred~Forest_type + Seed_size + (1 | Tree_sp), family = &quot;poisson&quot;)
+<pre class="r"><code>lme &lt;- glmer(data=glmdata, Vertebrate_pred~Seed_size + Forest_type + Seed_size + (1 | Tree_sp), family = &quot;poisson&quot;)
 summary(lme, corr=FALSE)</code></pre>
 <pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
 ##   Approximation) [glmerMod]
 ##  Family: poisson  ( log )
-## Formula: Vertebrate_pred ~ Forest_type + Seed_size + (1 | Tree_sp)
+## Formula: Vertebrate_pred ~ Seed_size + Forest_type + Seed_size + (1 |  
+##     Tree_sp)
 ##    Data: glmdata
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
@@ -1836,8 +1837,8 @@ summary(lme, corr=FALSE)</code></pre>
 ## Fixed effects:
 ##                      Estimate Std. Error z value Pr(&gt;|z|)    
 ## (Intercept)           1.05188    0.24448   4.302 1.69e-05 ***
-## Forest_typeFragments  0.40963    0.08449   4.848 1.25e-06 ***
 ## Seed_sizeMedium       1.73656    0.31962   5.433 5.54e-08 ***
+## Forest_typeFragments  0.40963    0.08449   4.848 1.25e-06 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>lme &lt;- glmer(data=glmdata, Invertebrate_pred~Seed_size + Forest_type + Seed_size + (1 | Tree_sp), family = &quot;poisson&quot;)

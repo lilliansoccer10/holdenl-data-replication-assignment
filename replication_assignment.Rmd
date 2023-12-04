@@ -176,7 +176,7 @@ head(newdata)
 ### Replicating the GLMM for Each Model
 
 ```{r}
-lme <- glmer(data=glmdata, Vertebrate_pred~Forest_type + Seed_size + (1 | Tree_sp), family = "poisson")
+lme <- glmer(data=glmdata, Vertebrate_pred~Seed_size + Forest_type + Seed_size + (1 | Tree_sp), family = "poisson")
 summary(lme, corr=FALSE)
 ```
 
