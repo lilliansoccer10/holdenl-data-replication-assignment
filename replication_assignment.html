@@ -1788,33 +1788,120 @@ head(proportiondata)</code></pre>
 ## 4 Persea macrantha        0.07           0.056              0.3          0.06
 ## 5 Overall                 0.24           0.31               0.17         0.28</code></pre>
 <pre class="r"><code>newdata &lt;- merge(glmdata, proportiondata, by=&quot;Tree_sp&quot;)
-head(newdata)</code></pre>
-<pre><code>##             Tree_sp Seed_size Tree_id Forest_type Latitude Longitude Start_date
-## 1 Canarium strictum     Large  CAST01   Fragments 10.36008  76.99823   19-03-18
-## 2 Canarium strictum     Large  CAST02   Benchmark 10.34327  76.90340   19-03-18
-## 3 Canarium strictum     Large  CAST03   Benchmark 10.34706  76.89804   19-03-18
-## 4 Canarium strictum     Large  CAST04   Fragments 10.34900  76.93300   19-03-18
-## 5 Canarium strictum     Large  CAST05   Fragments 10.34842  76.93261   19-03-18
-## 6 Canarium strictum     Large  CAST06   Benchmark 10.36405  76.99817   19-03-18
-##   End_date Num_days Intact.x Vertebrate_pred Invertebrate_pred Removed Intact.y
-## 1 28-05-18       70       40               0                 0       0     0.89
-## 2 30-05-18       72       39               0                 0       1     0.89
-## 3 30-05-18       72       37               0                 0       1     0.89
-## 4 28-05-18       70       40               0                 0       0     0.89
-## 5 28-05-18       70       36               1                 0       3     0.89
-## 6 25-05-18       67       39               0                 0       1     0.89
-##   Vertebrate_prop Invertebrate_prop Removed_prop
-## 1            0.06              0.01         0.04
-## 2            0.06              0.01         0.04
-## 3            0.06              0.01         0.04
-## 4            0.06              0.01         0.04
-## 5            0.06              0.01         0.04
-## 6            0.06              0.01         0.04</code></pre>
+newdata</code></pre>
+<pre><code>##              Tree_sp Seed_size Tree_id Forest_type Latitude Longitude
+## 1  Canarium strictum     Large  CAST01   Fragments 10.36008  76.99823
+## 2  Canarium strictum     Large  CAST02   Benchmark 10.34327  76.90340
+## 3  Canarium strictum     Large  CAST03   Benchmark 10.34706  76.89804
+## 4  Canarium strictum     Large  CAST04   Fragments 10.34900  76.93300
+## 5  Canarium strictum     Large  CAST05   Fragments 10.34842  76.93261
+## 6  Canarium strictum     Large  CAST06   Benchmark 10.36405  76.99817
+## 7  Canarium strictum     Large  CAST07   Benchmark 10.36570  76.99683
+## 8  Canarium strictum     Large  CAST08   Fragments 10.37099  76.99324
+## 9  Canarium strictum     Large  CAST09   Fragments 10.31439  76.83073
+## 10 Canarium strictum     Large  CAST10   Fragments 10.31400  76.83100
+## 11 Canarium strictum     Large  CAST11   Fragments 10.34700  76.93400
+## 12    Heynea trijuga    Medium  HETR01   Fragments 10.34872  76.93271
+## 13    Heynea trijuga    Medium  HETR02   Benchmark 10.37586  76.98943
+## 14    Heynea trijuga    Medium  HETR03   Benchmark 10.37579  76.98943
+## 15    Heynea trijuga    Medium  HETR04   Fragments 10.34870  76.93027
+## 16    Heynea trijuga    Medium  HETR05   Fragments 10.34856  76.93138
+## 17    Heynea trijuga    Medium  HETR06   Benchmark 10.37523  76.98890
+## 18    Heynea trijuga    Medium  HETR07   Fragments 10.30932  76.83337
+## 19    Heynea trijuga    Medium  HETR08   Fragments 10.34699  76.92949
+## 20    Heynea trijuga    Medium  HETR09   Fragments 10.39484  76.99285
+## 21    Heynea trijuga    Medium  HETR10   Benchmark 10.34783  76.89871
+## 22    Heynea trijuga    Medium  HETR11   Benchmark 10.35568  76.89274
+## 23  Persea macrantha    Medium  PEMA01   Fragments 10.34700  76.93100
+## 24  Persea macrantha    Medium  PEMA02   Fragments 10.34700  76.93200
+## 25  Persea macrantha    Medium  PEMA03   Fragments 10.34900  76.93100
+## 26  Persea macrantha    Medium  PEMA04   Fragments 10.36300  76.99600
+## 27  Persea macrantha    Medium  PEMA05   Fragments 10.36300  76.99600
+## 28  Persea macrantha    Medium  PEMA06   Benchmark 10.37500  76.99400
+## 29  Persea macrantha    Medium  PEMA07   Benchmark 10.36800  76.99613
+## 30  Persea macrantha    Medium  PEMA08   Benchmark 10.36900  76.99677
+## 31  Persea macrantha    Medium  PEMA09   Benchmark 10.36700  76.99661
+## 32  Persea macrantha    Medium  PEMA10   Benchmark 10.36900  76.99375
+## 33  Persea macrantha    Medium  PEMA11   Benchmark 10.39500  76.87170
+## 34  Persea macrantha    Medium  PEMA12   Benchmark 10.40000  76.87364
+## 35  Persea macrantha    Medium  PEMA13   Benchmark 10.40777  76.87607
+##    Start_date End_date Num_days Intact.x Vertebrate_pred Invertebrate_pred
+## 1    19-03-18 28-05-18       70       40               0                 0
+## 2    19-03-18 30-05-18       72       39               0                 0
+## 3    19-03-18 30-05-18       72       37               0                 0
+## 4    19-03-18 28-05-18       70       40               0                 0
+## 5    19-03-18 28-05-18       70       36               1                 0
+## 6    19-03-18 25-05-18       67       39               0                 0
+## 7    19-03-18 28-05-18       70       37               0                 0
+## 8    19-03-18 28-05-18       70       38               0                 0
+## 9    15-11-17 20-04-18      156       39               0                 0
+## 10   09-11-17 20-04-18      162       33               1                 1
+## 11   16-11-17 16-04-18      151       13              23                 3
+## 12   02-12-17 06-02-18       66        0              27                 0
+## 13   11-12-17 08-02-18       59        0               6                 0
+## 14   18-12-17 08-02-18       52        0              29                 0
+## 15   21-12-17 08-05-18      138        0              21                 1
+## 16   04-01-18 26-02-18       53        0              33                 0
+## 17   05-01-18 08-02-18       34        0               9                 0
+## 18   06-01-18 29-01-18       23        0              27                 0
+## 19   10-01-18 29-04-18      109        0              12                 0
+## 20   12-01-18 08-02-18       27        0              20                 0
+## 21   20-01-18 03-02-18       14        0              14                 0
+## 22   20-01-18 03-02-18       14        0               1                 0
+## 23   14-04-18 08-05-18       24        0              33                 2
+## 24   14-04-18 08-05-18       24        0              35                 2
+## 25   14-04-18 28-05-18       44        0              30                 9
+## 26   16-04-18 28-05-18       42        0              19                19
+## 27   16-04-18 28-05-18       42        0              20                18
+## 28   16-04-18 28-05-18       42        0              14                20
+## 29   16-04-18 22-05-18       36        0              24                15
+## 30   16-04-18 28-05-18       42        0              21                14
+## 31   16-04-18 28-05-18       42        0               8                30
+## 32   16-04-18 28-05-18       42        0              28                 8
+## 33   01-04-18 02-05-18       31        2              32                 0
+## 34   01-04-18 02-05-18       31       21               7                10
+## 35   31-03-18 02-05-18       32       14              19                 7
+##    Removed Intact.y Vertebrate_prop Invertebrate_prop Removed_prop
+## 1        0     0.89           0.060              0.01         0.04
+## 2        1     0.89           0.060              0.01         0.04
+## 3        1     0.89           0.060              0.01         0.04
+## 4        0     0.89           0.060              0.01         0.04
+## 5        3     0.89           0.060              0.01         0.04
+## 6        1     0.89           0.060              0.01         0.04
+## 7        3     0.89           0.060              0.01         0.04
+## 8        2     0.89           0.060              0.01         0.04
+## 9        1     0.89           0.060              0.01         0.04
+## 10       5     0.89           0.060              0.01         0.04
+## 11       1     0.89           0.060              0.01         0.04
+## 12      13     0.00           0.450              0.00         0.55
+## 13      34     0.00           0.450              0.00         0.55
+## 14      11     0.00           0.450              0.00         0.55
+## 15      18     0.00           0.450              0.00         0.55
+## 16       7     0.00           0.450              0.00         0.55
+## 17      31     0.00           0.450              0.00         0.55
+## 18      13     0.00           0.450              0.00         0.55
+## 19      28     0.00           0.450              0.00         0.55
+## 20      20     0.00           0.450              0.00         0.55
+## 21      26     0.00           0.450              0.00         0.55
+## 22      39     0.00           0.450              0.00         0.55
+## 23       5     0.07           0.056              0.30         0.06
+## 24       3     0.07           0.056              0.30         0.06
+## 25       1     0.07           0.056              0.30         0.06
+## 26       1     0.07           0.056              0.30         0.06
+## 27       2     0.07           0.056              0.30         0.06
+## 28       5     0.07           0.056              0.30         0.06
+## 29       0     0.07           0.056              0.30         0.06
+## 30       3     0.07           0.056              0.30         0.06
+## 31       0     0.07           0.056              0.30         0.06
+## 32       4     0.07           0.056              0.30         0.06
+## 33       6     0.07           0.056              0.30         0.06
+## 34       2     0.07           0.056              0.30         0.06
+## 35       0     0.07           0.056              0.30         0.06</code></pre>
 </div>
 <div id="replicating-the-glmm-for-each-model" class="section level3">
 <h3>Replicating the GLMM for Each Model</h3>
-<pre class="r"><code>lme &lt;- glmer(data=glmdata, Vertebrate_pred~Seed_size + Forest_type + Seed_size + (1 | Tree_sp), family = &quot;poisson&quot;)
-summary(lme, corr=FALSE)</code></pre>
+<pre class="r"><code>glmmI &lt;- glmer(data=glmdata, Vertebrate_pred~Seed_size + Forest_type + Seed_size + (1 | Tree_sp), family = poisson(link=&quot;log&quot;))
+summary(glmmI)</code></pre>
 <pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
 ##   Approximation) [glmerMod]
 ##  Family: poisson  ( log )
@@ -1840,9 +1927,14 @@ summary(lme, corr=FALSE)</code></pre>
 ## Seed_sizeMedium       1.73656    0.31962   5.433 5.54e-08 ***
 ## Forest_typeFragments  0.40963    0.08449   4.848 1.25e-06 ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>lme &lt;- glmer(data=glmdata, Invertebrate_pred~Seed_size + Forest_type + Seed_size + (1 | Tree_sp), family = &quot;poisson&quot;)
-summary(lme, corr=FALSE)</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) Sd_szM
+## Seed_sizMdm -0.729       
+## Frst_typFrg -0.239  0.034</code></pre>
+<pre class="r"><code>glmmIII &lt;- glmer(data=glmdata, Invertebrate_pred~Seed_size + Forest_type + Seed_size + (1 | Tree_sp), family = poisson(link=&quot;log&quot;))
+summary(glmmIII)</code></pre>
 <pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
 ##   Approximation) [glmerMod]
 ##  Family: poisson  ( log )
@@ -1868,9 +1960,47 @@ summary(lme, corr=FALSE)</code></pre>
 ## Seed_sizeMedium       -0.6060     2.2124  -0.274  0.78415   
 ## Forest_typeFragments   0.3632     0.1134   3.202  0.00136 **
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>lme &lt;- glmer(data=glmdata, Removed~Seed_size + Forest_type + Seed_size + (1 | Tree_sp), family = &quot;poisson&quot;)
-summary(lme, corr=FALSE)</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) Sd_szM
+## Seed_sizMdm -0.698       
+## Frst_typFrg -0.049  0.006</code></pre>
+<pre class="r"><code>glmmIV &lt;- glmer(Invertebrate_prop~Forest_type + Seed_size + (1 | Tree_sp), data=newdata, family=&quot;binomial&quot;)</code></pre>
+<pre><code>## boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
+<pre class="r"><code>summary(glmmIV)</code></pre>
+<pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: binomial  ( logit )
+## Formula: Invertebrate_prop ~ Forest_type + Seed_size + (1 | Tree_sp)
+##    Data: newdata
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##      8.0     14.2      0.0      0.0       31 
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+##        0        0   671089 20132659 20132659 
+## 
+## Random effects:
+##  Groups  Name        Variance Std.Dev.
+##  Tree_sp (Intercept) 0        0       
+## Number of obs: 35, groups:  Tree_sp, 3
+## 
+## Fixed effects:
+##                        Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)              -184.6 24977669.2       0        1
+## Forest_typeFragments      142.3 23013023.3       0        1
+## Seed_sizeMedium         -1081.7 24776070.5       0        1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) Frst_F
+## Frst_typFrg -0.586       
+## Seed_sizMdm -0.759  0.165
+## optimizer (Nelder_Mead) convergence code: 0 (OK)
+## boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
+<pre class="r"><code>glmmV &lt;- glmer(data=glmdata, Removed~Seed_size + Forest_type + Seed_size + (1 | Tree_sp), family = poisson(link=&quot;log&quot;))
+summary(glmmV)</code></pre>
 <pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
 ##   Approximation) [glmerMod]
 ##  Family: poisson  ( log )
@@ -1895,7 +2025,12 @@ summary(lme, corr=FALSE)</code></pre>
 ## Seed_sizeMedium       0.20683    1.18269   0.175 0.861174    
 ## Forest_typeFragments -0.33224    0.08602  -3.862 0.000112 ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) Sd_szM
+## Seed_sizMdm -0.708       
+## Frst_typFrg -0.052  0.009</code></pre>
 </div>
 </div>
 
