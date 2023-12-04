@@ -2,14 +2,19 @@
 title: "Analysis Replication"
 author: "Lillian Holden"
 date: "Due Decemeber 14th"
-output: html_document
-editor_options: 
-  chunk_output_type: inline
+output: 
+  html_document:
+    toc: true
+    toc_float:
+      toc_collapsed: true
+    toc_depth: 3
+    theme: lumen
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
-
-
-### Load the Required Packages
+#### Load the Required Packages
 ```{r message=FALSE, warning=FALSE}
 library(readr)
 library(ggplot2)
@@ -30,18 +35,19 @@ invertebrate seed predators, and 3) removed by vertebrate seed predators. The se
 
 
 
-### Replicating a Figure - The Figure Being Replicated 
-```{r figure, echo=FALSE, fig.align='center', out.width='25%'}
-knitr::include_graphics('~/Documents/GitHub/holdenl-data-replication-assignment/Figure.png')
-```
+## Replicating a Figure 
 
-## Loading in the Data Set 
+### The Figure Being Replicated 
+
+![](Figure.png)
+
+### Loading in the Data Set 
 ```{r}
 my_data <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Distance_moved.csv", show_col_types = FALSE)
 head(my_data)
 ```
 
-## Organizing The Data Set with Piping 
+### Organizing The Data Set with Piping 
 ```{r}
 #Add Columns that Expresses Mean, Standard Deviation, Standard Error, Upper Limit, and Lower Limit and Organizes it by Tree Species and Forest Type
 new_data <- my_data %>%  
@@ -60,25 +66,24 @@ upper_limit <- new_data$upper_limit
 lower_limit <- new_data$lower_limit
 ```
 
+### Replicating the Figure 
 ```{r warning=FALSE}
-#Replicate the Figure 
 g <- ggplot() + 
 geom_col(data = new_data, mapping = aes(x = Tree_sp, y = Distance_moved_means, group=Forest_type, fill = Forest_type), colour = "black", position = "dodge") +
 geom_errorbar(data = new_data, aes(x=Tree_sp, ymin = lower_limit, ymax = upper_limit, fill= Forest_type), width=.2, position=position_dodge(.9)) 
 g
 ```
 
-### Replicating A Descriptive Statistical Analysis
-```{r figure, echo=FALSE, fig.align='center', out.width='25%'}
-knitr::include_graphics('~/Documents/GitHub/holdenl-data-replication-assignment/Descriptive_Analysis.png')
-```
+## Replicating A Descriptive Statistical Analysis
 
+![](Descriptive_Analysis.png)
+### Loading in the Data
 ```{r}
 data <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Visits_seedpredators_CT.csv", show_col_types = FALSE)
 head(data)
 ```
 
-
+#### Organizing Data
 ```{r}
 #Add Columns that Expresses Mean and Standard Deviation
 dataII <- data %>%  
@@ -87,7 +92,7 @@ dataII <- data %>%
 head(dataII)
 ```
 
-
+#### Piping 
 ```{r}
 dataIII <- 
   dataII %>%
@@ -95,7 +100,7 @@ dataIII <-
   summarize(Number_of_trees = n_distinct(Number_of_trees))
 dataIII
 ```
-
+#### Piping 
 ```{r}
 dataIIII <- 
   dataII %>%
@@ -104,7 +109,7 @@ dataIIII <-
 dataIIII
 ```
 
-
+#### Piping 
 ```{r}
 dataV <- 
   dataII %>%
@@ -112,6 +117,8 @@ dataV <-
   summarize(Min = min(Total, na.rm=TRUE))
 dataV
 ```
+
+#### Piping 
 ```{r}
 dataVI <- 
   dataII %>%
@@ -119,7 +126,7 @@ dataVI <-
   summarize(Total_visits=sum(Total_visits))
 dataVI
 ```
-
+#### Piping 
 ```{r}
 dataVII <- 
   data %>%
@@ -140,42 +147,33 @@ w <- merge(v, dataV)
 w
 ```
 
-##GLM 
+## GLMM Replication  
 
-```{r warning=FALSE}
+```{r message=FALSE, warning=FALSE}
 library(tidyverse)
 library(MuMIn)
 library(lme4)
 ```
 
-```{r figure, echo=FALSE, fig.align='center', out.width='25%'}
-knitr::include_graphics('~/Documents/GitHub/holdenl-data-replication-assignment/GLMM.png')
-```
+### Results of the GLMM Being Replicated
 
+![](GLMM.png)
+### Load in the Data
 ```{r}
 glmdata <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/2_Seed_fate.csv", show_col_types = FALSE)
-glmdata
+head(glmdata)
 ```
 
 ```{r}
 proportiondata <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Proportions.csv", show_col_types = FALSE)
-proportiondata
+head(proportiondata)
 ```
 ```{r}
 newdata <- merge(glmdata, proportiondata, by="Tree_sp")
-newdata
+head(newdata)
 ```
 
-```{r}
-gsf <- glmer(Vertebrate_prop~ Forest_type*Seed_size + (1 | Tree_sp), data = newdata  ,family = "binomial", control = glmerControl(optimizer = "bobyqa"))
-```
-lmer <- glmer()
-```{r}
-lme <- glmer(Vertebrate_prop ~ Forest_type*Seed_size + (1 | Tree_sp), family = "poisson", data=newdata)
-summary(lme, corr=FALSE)
-```
-CORRECT is below????
-
+### Replicating the GLMM for Each Model
 
 ```{r}
 lme <- glmer(data=glmdata, Vertebrate_pred~Forest_type*Seed_size + (1 | Tree_sp), family = "poisson")
