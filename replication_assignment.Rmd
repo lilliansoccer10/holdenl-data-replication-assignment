@@ -134,7 +134,7 @@ dataVII <-
   summarize(Total=sum(unique(CT_trap_nights)))
 dataVII
 ```
-Canarium and Persea match, but Heynea and Myristica do not, for some reason. 
+Canarium and Persea match what was presented in the paper, but Heynea and Myristica do not, for some reason. 
 
 ### Merging Some of The Organized Data -- might not include or explain why it doesn't really work... 
 ```{r}
