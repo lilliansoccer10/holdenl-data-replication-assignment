@@ -158,44 +158,27 @@ library(lme4)
 ### Results of the GLMM Being Replicated
 
 ![](GLMM.png)
+
 ### Load in the Data
 ```{r}
-glmdata <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/2_Seed_fate.csv", show_col_types = FALSE)
+glmdata <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Overall_visits.csv", show_col_types = FALSE)
 head(glmdata)
 ```
 
-
 ```{r}
-proportiondata <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Proportions.csv", show_col_types = FALSE)
-head(proportiondata)
-```
-```{r}
-newdata <- merge(glmdata, proportiondata, by="Tree_sp")
-newdata
+newglmmdata <- merge(glmdata, data)
+newglmmdata
 ```
 
-### Replicating the GLMM for Each Model
 
-```{r}
-glmmI <- glmer(data=glmdata, Vertebrate_pred~Seed_size + Forest_type + Seed_size + (1 | Tree_sp), family = poisson(link="log"))
+
+
+### Replicating the GLMM
+
+```{r warning=FALSE}
+glmmI <- glmer(Num_visits~Forest_type + (1 | Tree_sp), data=newglmmdata, family = "poisson") 
 summary(glmmI)
 ```
 
-```{r eval=FALSE, warning=FALSE, include=FALSE}
-glmmII <- glmer(Invertebrate_prop~Forest_type + Seed_size + (1 | Tree_sp), data=prop, family="binomial")
-summary(glmmII)
-```
 
-```{r}
-glmmIII <- glmer(data=glmdata, Invertebrate_pred~Seed_size + Forest_type + Seed_size + (1 | Tree_sp), family = poisson(link="log"))
-summary(glmmIII)
-```
-```{r warning=FALSE}
-glmmIV <- glmer(Invertebrate_prop~Forest_type + Seed_size + (1 | Tree_sp), data=newdata, family="binomial")
-summary(glmmIV)
-```
 
-```{r}
-glmmV <- glmer(data=glmdata, Removed~Seed_size + Forest_type + Seed_size + (1 | Tree_sp), family = poisson(link="log"))
-summary(glmmV)
-```
