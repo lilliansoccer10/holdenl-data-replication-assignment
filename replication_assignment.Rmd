@@ -179,8 +179,10 @@ summary(glmmI)
 ```
 
 ```{r warning=FALSE}
+#install.packages("performance")
+library(performance)
 library(MuMIn)
-r.squaredGLMM(glmmI)
+r2_nakagawa(glmmI)
 confint(glmmI)
 ```
 
