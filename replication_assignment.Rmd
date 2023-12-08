@@ -159,26 +159,28 @@ library(lme4)
 
 ![](GLMM.png)
 
-### Load in the Data
-```{r}
-glmdata <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Overall_visits.csv", show_col_types = FALSE)
-head(glmdata)
-```
 
 ```{r}
-newglmmdata <- merge(glmdata, data)
-newglmmdata
+dataK <- 
+data%>%
+  group_by(Tree_sp, Forest_type, CT_trap_nights) %>%
+  reframe(Num_visits)
+dataK
 ```
-
 
 
 
 ### Replicating the GLMM
 
+
 ```{r warning=FALSE}
-glmmI <- glmer(Num_visits~Forest_type + (1 | Tree_sp), data=newglmmdata, family = "poisson") 
+glmmI <- glmer(Num_visits~Forest_type + offset(log(Trap_nights)) + (1|Tree_sp), data=dataK, family = poisson(link = "log"))
 summary(glmmI)
 ```
 
-
+```{r warning=FALSE}
+library(MuMIn)
+r.squaredGLMM(glmmI)
+confint(glmmI)
+```
 
