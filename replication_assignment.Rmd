@@ -230,3 +230,10 @@ The marginal R2 for the mixed model is the same as published in the paper, howev
 ```{r}
 confint(glmmI) #use confint to find the confidence intervals of the glmm
 ```
+<br>
+
+#### References
+https://www.sciencedirect.com/science/article/pii/S1146609X20301909 <br>
+https://www.stat.umn.edu/geyer/5931/mle/seed2.pdf <br>
+https://fuzzyatelin.github.io/bioanth-stats/modules.html <br>
+https://stackoverflow.com/questions/13050516/how-to-make-dodge-in-geom-bar-agree-with-dodge-in-geom-errorbar-geom-point <br>
