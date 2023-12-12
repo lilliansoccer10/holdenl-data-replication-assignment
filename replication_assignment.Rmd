@@ -1,5 +1,5 @@
 ---
-title: "Analysis Replication"
+title: "Replication Analysis"
 author: "Lillian Holden"
 date: "Due Decemeber 14th"
 output: 
@@ -14,38 +14,38 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-#### Load the Required Packages
+<br>
+
+### Loading the Required Packages
 ```{r message=FALSE, warning=FALSE}
 library(readr)
 library(ggplot2)
-#library(plyr)
 library(dplyr)
 library(shiny)
 library(tidyverse)
 ```
-Article Title: Seed fates of four rainforest tree species in the fragmented forests of
-Anamalais in the southern Western Ghats, India 
-Article By: Abhishek Gopala, Divya Mudappa, TR Shankar Raman, Rohit Naniwadekar
+
 <br>
 
-Introduction 
-Seed predation is key in controlling plant population and the structure within forests. Forest fragmentation and habitat loss is directly correlated with seed predation and altered tree recruitment. This article examines four different rainforest tree species and the influence of forest type: benchmark N=3, fragmented N=5, and seed size on the proportion of seeds: 1) predated by vertebrate seed predators, 2) predated by
-invertebrate seed predators, and 3) removed by vertebrate seed predators. The seeds were tracked by putting seeds in four 1x1 meter plots under each canopy type. Camera traps were placed under a subset of trees N=29 and there was a total of N=712 trap nights. Nine species of seed predators was recorded and it is noted that they differed between tree species. This study brings forth the idea that seed predation can alter regeneration patterns and alter adult tree communities in fragmented forests. 
+# Introduction
+The published article, "Seed fates of four rainforest tree species in the fragmented forests of Anamalais in the southern Western Ghats, India" by Abhishek Gopala, Divya Mudappa, TR Shankar Raman, Rohit Naniwadekar publishes data on the seed fates of four different tree species in fragmented forests in India. The tree species include: Canarium strictum, Heynea trijuga, Myristica dactyloides, and Persea macrantha. In the article, it describes how seed predation is key in controlling plant population and the structure within forests. Forest fragmentation and habitat loss is directly correlated with seed predation and altered tree recruitment. This article examines four different rainforest tree species and the influence of forest type: benchmark N=3, fragmented N=5, and seed size on the proportion of seeds: 1) predated by vertebrate seed predators, 2) predated by invertebrate seed predators, and 3) removed by vertebrate seed predators. The seeds were tracked by putting seeds in four 1x1 meter plots under each canopy type. Camera traps were placed under a subset of trees N=29 and there was a total of N=712 trap nights. Nine species of seed predators was recorded and it is noted that they differed between tree species. This study brings forth the idea that seed predation can alter regeneration patterns and alter adult tree communities in fragmented forests. 
 
 
+<br>
 
-
-## Replicating a Figure 
+# Replication of a Figure 
 
 ### The Figure Being Replicated 
 
 ![](Figure.png)
+<br>
 
 ### Loading in the Data Set 
 ```{r}
 my_data <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Distance_moved.csv", show_col_types = FALSE)
 head(my_data)
 ```
+<br>
 
 ### Organizing The Data Set with Piping 
 ```{r}
@@ -60,13 +60,17 @@ new_data <- my_data %>%
   )  
 head(new_data)
 ```
+<br>
+
+### Seting the  Upper Limit and Lower Limit within the Data Set Are in Order to Plot Error Bars 
 ```{r}
-#Set What Your Upper Limit and Lower Limit within the Data Set Are in Order to Plot Error Bars ??? Do I need to do this? I don't think I do... 
 upper_limit <- new_data$upper_limit
 lower_limit <- new_data$lower_limit
 ```
 
-### Replicating the Figure 
+<br>
+
+### Plotting the Data
 ```{r warning=FALSE}
 g <- ggplot() + 
 geom_col(data = new_data, mapping = aes(x = Tree_sp, y = Distance_moved_means, group=Forest_type, fill = Forest_type), colour = "black", position = "dodge") +
@@ -74,59 +78,72 @@ geom_errorbar(data = new_data, aes(x=Tree_sp, ymin = lower_limit, ymax = upper_l
 g
 ```
 
-## Replicating A Descriptive Statistical Analysis
+<br>
+
+# Replicating A Descriptive Statistical Analysis
 
 ![](Descriptive_Analysis.png)
+
+<br>
+
 ### Loading in the Data
 ```{r}
 data <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Visits_seedpredators_CT.csv", show_col_types = FALSE)
 head(data)
 ```
+<br>
 
-#### Organizing Data
-```{r}
-#Add Columns that Expresses Mean and Standard Deviation
-dataII <- data %>%  
-  group_by(Tree_sp, Forest_type) %>%  
-  summarise(Number_of_trees=Tree_id,Total=CT_trap_nights, Min=min(CT_trap_nights), Max=max(CT_trap_nights), Visitor_species_type=Body_size, Total_visits=Num_visits)
-head(dataII)
-```
+### Organizing The Data Set with Piping
 
-#### Piping 
+Because each column of data is organized differently, each column will need to be extracted individually: 
+
+<br>
+
+#### Piping to Find the Total Number of Benchmark and Fragment Trees that Contain Camera Traps Per Tree Species
 ```{r}
 dataIII <- 
-  dataII %>%
+  data %>%
   group_by(Tree_sp, Forest_type) %>%
-  summarize(Number_of_trees = n_distinct(Number_of_trees))
+  summarize(Number_of_trees = n_distinct(Tree_id))
 dataIII
 ```
-#### Piping 
+
+<br>
+
+#### Piping to Find the Maximum Number of Visits of Seed Predators in a Night per Tree Species
 ```{r}
 dataIIII <- 
-  dataII %>%
+  data %>%
   group_by(Tree_sp) %>%
-  summarize(Max = max(Total, na.rm=TRUE))
+  summarize(Max = max(CT_trap_nights, na.rm=TRUE))
 dataIIII
 ```
 
-#### Piping 
+<br>
+
+#### Piping to Find the Minimum Number of Visits of Seed Predators in a Night per Tree Species
 ```{r}
 dataV <- 
-  dataII %>%
+  data %>%
   group_by(Tree_sp) %>%
-  summarize(Min = min(Total, na.rm=TRUE))
+  summarize(Min = min(CT_trap_nights, na.rm=TRUE))
 dataV
 ```
 
-#### Piping 
+<br>
+
+#### Piping to Find the Total Visits for Large (>1 kg) and Small Bodied (<1kg) Seed Predators per Tree Species 
 ```{r}
 dataVI <- 
-  dataII %>%
-  group_by(Tree_sp, Visitor_species_type) %>%
-  summarize(Total_visits=sum(Total_visits))
+  data %>%
+  group_by(Tree_sp, Body_size) %>%
+  summarize(Total_visits=sum(Num_visits))
 dataVI
 ```
-#### Piping 
+
+<br>
+
+#### Piping to Find the Total Number of Seed Predators per Tree Species
 ```{r}
 dataVII <- 
   data %>%
@@ -135,6 +152,8 @@ dataVII <-
 dataVII
 ```
 Canarium and Persea match what was presented in the paper, but Heynea and Myristica do not, for some reason. 
+
+<br>
 
 ### Merging Some of The Organized Data -- might not include or explain why it doesn't really work... 
 ```{r}
@@ -147,42 +166,67 @@ w <- merge(v, dataV)
 w
 ```
 
-## GLMM Replication  
+<br>
+
+# GLMM Replication  
 
 ```{r message=FALSE, warning=FALSE}
-library(tidyverse)
-library(MuMIn)
-library(lme4)
+library(lme4) #load the lme4 package to use the glmer() function
 ```
+
+<br>
 
 ### Results of the GLMM Being Replicated
 
+#### A GLMM with a poisson error structure examining the influence of forest type on the visitations of seed predators with tree species as a random variable was run using the offset() function to account for variable trap nights. 
+
 ![](GLMM.png)
 
+<br>
+
+#### Piping to Determine the Number of Visits Based Tree Species and Forest Type
+```{r}
+glmmdata <- 
+data %>%
+  group_by(Tree_sp, Forest_type) %>%
+  reframe(Num_visits)
+glmmdata
+```
+<br>
+
+In order to get the offset() function to work properly, I had to turn CT_trap_nights into a separate vector. 
+
+<br>
 
 ```{r}
-dataK <- 
-data%>%
-  group_by(Tree_sp, Forest_type, CT_trap_nights) %>%
-  reframe(Num_visits)
-dataK
+Trap_nights <- data$CT_trap_nights
+Trap_nights
 ```
 
-
+<br>
 
 ### Replicating the GLMM
 
 
 ```{r warning=FALSE}
-glmmI <- glmer(Num_visits~Forest_type + offset(log(Trap_nights)) + (1|Tree_sp), data=dataK, family = poisson(link = "log"))
+glmmI <- glmer(Num_visits~Forest_type + offset(log(Trap_nights)) + (1|Tree_sp), data=glmmdata, family = poisson(link = "log"))
 summary(glmmI)
 ```
 
+<br>
+
+#### Determine the Marginal and Conditional R2 for the GLMM
 ```{r warning=FALSE}
 #install.packages("performance")
 library(performance)
-library(MuMIn)
-r2_nakagawa(glmmI)
-confint(glmmI)
+r2_nakagawa(glmmI) #use r2_nakagawa package to find the marginal and conditional R2 values
 ```
 
+The marginal R2 for the mixed model is the same as published in the paper, however the conditional is not. 
+
+<br>
+
+#### Determine the Confidence Intervals for the GLMM
+```{r}
+confint(glmmI) #use confint to find the confidence intervals of the glmm
+```
