@@ -10,6 +10,7 @@ output:
     toc_depth: 3
     theme: lumen
 ---
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -37,7 +38,7 @@ The published article, "Seed fates of four rainforest tree species in the fragme
 
 ### The Figure Being Replicated 
 
-![](Figure.png)
+![](img/Figure.png)
 <br>
 
 ### Loading in the Data Set 
@@ -82,7 +83,8 @@ g
 
 # Replicating A Descriptive Statistical Analysis
 
-![](Descriptive_Analysis.png)
+
+![](img/Descriptive_Analysis.png)
 
 <br>
 
@@ -96,7 +98,7 @@ head(data)
 
 ### Organizing The Data Set with Piping
 
-Because each column of data is organized differently, each column will need to be extracted individually: 
+Because each column of data is organized differently, information will need to be extracted individually: 
 
 <br>
 
@@ -154,24 +156,31 @@ dataVII
 ```
 Canarium and Persea match what was presented in the paper, but Heynea and Myristica do not, for some reason. 
 
+<br>
+
 ```{r}
-z <- merge(dataVII, dataVI)
-z
+dataVIII <- merge(dataVI, dataVII)
+dataVIII
 ```
 <br>
 
 #### Piping to Find the Mean of Seed Predator Visits per Trap Night
 
 ```{r}
-dataX <- 
-  z %>%
+dataVIIII <- 
+  dataVIII %>%
   group_by(Tree_sp, Body_size) %>%
   summarize(Mean=Total_visits/Total)
-dataX
+dataVIIII
 ```
+The means calculated are all relatively close to that of the published paper, except for small-bodied Heynea trijuga. 
 
+<br>
 
 # GLMM Replication  
+<br>
+
+
 
 ```{r message=FALSE, warning=FALSE}
 library(lme4) #load the lme4 package to use the glmer() function
@@ -183,8 +192,9 @@ library(lme4) #load the lme4 package to use the glmer() function
 
 #### A GLMM with a poisson error structure examining the influence of forest type on the visitations of seed predators with tree species as a random variable was run using the offset() function to account for variable trap nights. 
 
-![](GLMM.png)
+![](img/GLMM.png)
 
+<br>
 <br>
 
 #### Piping to Determine the Number of Visits Based Tree Species and Forest Type
@@ -197,10 +207,7 @@ glmmdata
 ```
 <br>
 
-In order to get the offset() function to work properly, I had to turn CT_trap_nights into a separate vector. 
-
-<br>
-
+#### In order to get the offset() function to work properly, I had to turn CT_trap_nights into a separate vector:
 ```{r}
 Trap_nights <- data$CT_trap_nights
 Trap_nights
