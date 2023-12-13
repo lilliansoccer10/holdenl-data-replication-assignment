@@ -1,21 +1,14 @@
 ---
-title: "Replication Analysis"
+title: "Analysis Replication Assignment"
 author: "Lillian Holden"
 date: "Due Decemeber 14th"
-output: 
-  html_document:
-    toc: true
-    toc_float:
-      toc_collapsed: true
-    toc_depth: 3
-    theme: lumen
+output: rmdformats::readthedown
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<br>
 
 ### Loading the Required Packages
 ```{r message=FALSE, warning=FALSE}
@@ -24,9 +17,9 @@ library(ggplot2)
 library(dplyr)
 library(shiny)
 library(tidyverse)
+library(curl)
 ```
 
-<br>
 
 # Introduction
 The published article, "Seed fates of four rainforest tree species in the fragmented forests of Anamalais in the southern Western Ghats, India" by Abhishek Gopala, Divya Mudappa, TR Shankar Raman, Rohit Naniwadekar publishes data on the seed fates of four different tree species in fragmented forests in India. The tree species include: Canarium strictum, Heynea trijuga, Myristica dactyloides, and Persea macrantha. In the article, it describes how seed predation is key in controlling plant population and the structure within forests. Forest fragmentation and habitat loss is directly correlated with seed predation and altered tree recruitment. This article examines four different rainforest tree species and the influence of forest type: benchmark N=3, fragmented N=5, and seed size on the proportion of seeds: 1) predated by vertebrate seed predators, 2) predated by invertebrate seed predators, and 3) removed by vertebrate seed predators. The seeds were tracked by putting seeds in four 1x1 meter plots under each canopy type. Camera traps were placed under a subset of trees N=29 and there was a total of N=712 trap nights. Nine species of seed predators was recorded and it is noted that they differed between tree species. This study brings forth the idea that seed predation can alter regeneration patterns and alter adult tree communities in fragmented forests. 
@@ -34,16 +27,17 @@ The published article, "Seed fates of four rainforest tree species in the fragme
 
 <br>
 
-# Replication of a Figure 
+# Replicating a Figure 
 
 ### The Figure Being Replicated 
 
 ![](img/Figure.png)
+
+<br>
 <br>
 
-### Loading in the Data Set 
+### Curling in the Data 
 ```{r message=FALSE, warning=FALSE}
-library(curl)
 f <- curl("https://raw.githubusercontent.com/lilliansoccer10/holdenl-data-replication-assignment/main/Distance_moved.csv")
 my_data <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
 head(my_data)
@@ -83,9 +77,8 @@ g
 
 <br>
 
-### Loading in the Data
+### Curling in the Data
 ```{r message=FALSE, warning=FALSE}
-library(curl)
 f <- curl("https://raw.githubusercontent.com/lilliansoccer10/holdenl-data-replication-assignment/main/Visits_seedpredators_CT.csv")
 data <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
 head(data)
@@ -155,14 +148,17 @@ Canarium and Persea match what was presented in the paper, but Heynea and Myrist
 
 <br>
 
+
+
+#### Merging Data to Find the Mean Visits per Trap Night
 ```{r}
-dataVIII <- merge(dataVI, dataVII)
+dataVIII <- merge(dataVI, dataVII) #merge the data sets with total trap nights and total visits
 dataVIII
 ```
 <br>
 
-#### Piping to Find the Mean of Seed Predator Visits per Trap Night
 
+#### Piping to Find the Mean Visits per Trap Night
 ```{r}
 dataVIIII <- 
   dataVIII %>%
@@ -174,20 +170,16 @@ The means calculated are all relatively close to that of the published paper, ex
 
 <br>
 
-# GLMM Replication  
-<br>
-
-
+# Replicating a GLMM   
 
 ```{r message=FALSE, warning=FALSE}
 library(lme4) #load the lme4 package to use the glmer() function
 ```
 
-<br>
 
 ### Results of the GLMM Being Replicated
 
-#### A GLMM with a poisson error structure examining the influence of forest type on the visitations of seed predators with tree species as a random variable was run using the offset() function to account for variable trap nights. 
+A GLMM with a poisson error structure examining the influence of forest type on the visitations of seed predators with tree species as a random variable was run using the offset() function to account for variable trap nights. 
 
 ![](img/GLMM.png)
 
