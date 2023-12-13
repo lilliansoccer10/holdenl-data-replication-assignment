@@ -111,7 +111,7 @@ dataIII
 
 <br>
 
-#### Piping to Find the Maximum Number of Trap Nights of Seed Predators in a Night per Tree Species
+#### Piping to Find the Maximum Number of Trap Nights per Tree Species
 ```{r}
 dataIIII <- 
   data %>%
@@ -122,7 +122,7 @@ dataIIII
 
 <br>
 
-#### Piping to Find the Minimum Number of Trap Nights of Seed Predators per Tree Species
+#### Piping to Find the Minimum Number of Trap Nights per Tree Species
 ```{r}
 dataV <- 
   data %>%
@@ -144,7 +144,7 @@ dataVI
 
 <br>
 
-#### Piping to Find the Total Trap Nights of Seed Predator Visits per Tree Species
+#### Piping to Find the Total Trap Nights per Tree Species
 ```{r}
 dataVII <- 
   data %>%
@@ -154,19 +154,21 @@ dataVII
 ```
 Canarium and Persea match what was presented in the paper, but Heynea and Myristica do not, for some reason. 
 
-<br>
-
-#### Finding the Mean and Standard Deviation of Seed Predator Visits per Trap Night
 ```{r}
-dataVIII <- merge(dataVII, dataVI) #merge the data required
-dataVIII
+z <- merge(dataVII, dataVI)
+z
 ```
-
 <br>
 
-#### Piping to Find the Mean and Standard Deviation of Seed Predator Visits per Trap Night
+#### Piping to Find the Mean of Seed Predator Visits per Trap Night
 
-
+```{r}
+dataX <- 
+  z %>%
+  group_by(Tree_sp, Body_size) %>%
+  summarize(Mean=Total_visits/Total)
+dataX
+```
 
 
 # GLMM Replication  

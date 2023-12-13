@@ -1658,9 +1658,9 @@ Contain Camera Traps Per Tree Species</h4>
 ## 8 Persea macrantha      Fragments                 1</code></pre>
 <p><br></p>
 </div>
-<div id="piping-to-find-the-maximum-number-of-trap-nights-of-seed-predators-in-a-night-per-tree-species" class="section level4">
-<h4>Piping to Find the Maximum Number of Trap Nights of Seed Predators
-in a Night per Tree Species</h4>
+<div id="piping-to-find-the-maximum-number-of-trap-nights-per-tree-species" class="section level4">
+<h4>Piping to Find the Maximum Number of Trap Nights per Tree
+Species</h4>
 <pre class="r"><code>dataIIII &lt;- 
   data %&gt;%
   group_by(Tree_sp) %&gt;%
@@ -1675,9 +1675,9 @@ dataIIII</code></pre>
 ## 4 Persea macrantha         42</code></pre>
 <p><br></p>
 </div>
-<div id="piping-to-find-the-minimum-number-of-trap-nights-of-seed-predators-per-tree-species" class="section level4">
-<h4>Piping to Find the Minimum Number of Trap Nights of Seed Predators
-per Tree Species</h4>
+<div id="piping-to-find-the-minimum-number-of-trap-nights-per-tree-species" class="section level4">
+<h4>Piping to Find the Minimum Number of Trap Nights per Tree
+Species</h4>
 <pre class="r"><code>dataV &lt;- 
   data %&gt;%
   group_by(Tree_sp) %&gt;%
@@ -1716,9 +1716,8 @@ Bodied (&lt;1kg) Seed Predator Visits per Tree Species</h4>
 ## 8 Persea macrantha      Small               87</code></pre>
 <p><br></p>
 </div>
-<div id="piping-to-find-the-total-trap-nights-of-seed-predator-visits-per-tree-species" class="section level4">
-<h4>Piping to Find the Total Trap Nights of Seed Predator Visits per
-Tree Species</h4>
+<div id="piping-to-find-the-total-trap-nights-per-tree-species" class="section level4">
+<h4>Piping to Find the Total Trap Nights per Tree Species</h4>
 <pre class="r"><code>dataVII &lt;- 
   data %&gt;%
   group_by(Tree_sp) %&gt;%
@@ -1733,13 +1732,8 @@ dataVII</code></pre>
 ## 4 Persea macrantha        148</code></pre>
 <p>Canarium and Persea match what was presented in the paper, but Heynea
 and Myristica do not, for some reason.</p>
-<p><br></p>
-</div>
-<div id="finding-the-mean-and-standard-deviation-of-seed-predator-visits-per-trap-night" class="section level4">
-<h4>Finding the Mean and Standard Deviation of Seed Predator Visits per
-Trap Night</h4>
-<pre class="r"><code>dataVIII &lt;- merge(dataVII, dataVI) #merge the data required
-dataVIII</code></pre>
+<pre class="r"><code>z &lt;- merge(dataVII, dataVI)
+z</code></pre>
 <pre><code>##                 Tree_sp Total Body_size Total_visits
 ## 1     Canarium strictum   267     Large           64
 ## 2     Canarium strictum   267     Small          122
@@ -1751,9 +1745,27 @@ dataVIII</code></pre>
 ## 8      Persea macrantha   148     Small           87</code></pre>
 <p><br></p>
 </div>
-<div id="piping-to-find-the-mean-and-standard-deviation-of-seed-predator-visits-per-trap-night" class="section level4">
-<h4>Piping to Find the Mean and Standard Deviation of Seed Predator
-Visits per Trap Night</h4>
+<div id="piping-to-find-the-mean-of-seed-predator-visits-per-trap-night" class="section level4">
+<h4>Piping to Find the Mean of Seed Predator Visits per Trap Night</h4>
+<pre class="r"><code>dataX &lt;- 
+  z %&gt;%
+  group_by(Tree_sp, Body_size) %&gt;%
+  summarize(Mean=Total_visits/Total)</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;Tree_sp&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<pre class="r"><code>dataX</code></pre>
+<pre><code>## # A tibble: 8 × 3
+## # Groups:   Tree_sp [4]
+##   Tree_sp               Body_size  Mean
+##   &lt;chr&gt;                 &lt;chr&gt;     &lt;dbl&gt;
+## 1 Canarium strictum     Large     0.240
+## 2 Canarium strictum     Small     0.457
+## 3 Heynea trijuga        Large     0.415
+## 4 Heynea trijuga        Small     2.01 
+## 5 Myristica dactyloides Large     0.418
+## 6 Myristica dactyloides Small     2.05 
+## 7 Persea macrantha      Large     0.169
+## 8 Persea macrantha      Small     0.588</code></pre>
 </div>
 </div>
 </div>
