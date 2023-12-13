@@ -42,8 +42,10 @@ The published article, "Seed fates of four rainforest tree species in the fragme
 <br>
 
 ### Loading in the Data Set 
-```{r}
-my_data <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Distance_moved.csv", show_col_types = FALSE)
+```{r message=FALSE, warning=FALSE}
+library(curl)
+f <- curl("https://raw.githubusercontent.com/lilliansoccer10/holdenl-data-replication-assignment/main/Distance_moved.csv")
+my_data <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
 head(my_data)
 ```
 <br>
@@ -60,13 +62,6 @@ new_data <- my_data %>%
             lower_limit=Distance_moved_means-se
   )  
 head(new_data)
-```
-<br>
-
-### Seting the  Upper Limit and Lower Limit within the Data Set Are in Order to Plot Error Bars 
-```{r}
-upper_limit <- new_data$upper_limit
-lower_limit <- new_data$lower_limit
 ```
 
 <br>
@@ -89,8 +84,10 @@ g
 <br>
 
 ### Loading in the Data
-```{r}
-data <- read_csv("/Users/lilyholden/Documents/GitHub/holdenl-data-replication-assignment/Visits_seedpredators_CT.csv", show_col_types = FALSE)
+```{r message=FALSE, warning=FALSE}
+library(curl)
+f <- curl("https://raw.githubusercontent.com/lilliansoccer10/holdenl-data-replication-assignment/main/Visits_seedpredators_CT.csv")
+data <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
 head(data)
 ```
 <br>
