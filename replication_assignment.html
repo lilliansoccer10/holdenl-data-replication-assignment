@@ -1658,9 +1658,9 @@ Contain Camera Traps Per Tree Species</h4>
 ## 8 Persea macrantha      Fragments                 1</code></pre>
 <p><br></p>
 </div>
-<div id="piping-to-find-the-maximum-number-of-visits-of-seed-predators-in-a-night-per-tree-species" class="section level4">
-<h4>Piping to Find the Maximum Number of Visits of Seed Predators in a
-Night per Tree Species</h4>
+<div id="piping-to-find-the-maximum-number-of-trap-nights-of-seed-predators-in-a-night-per-tree-species" class="section level4">
+<h4>Piping to Find the Maximum Number of Trap Nights of Seed Predators
+in a Night per Tree Species</h4>
 <pre class="r"><code>dataIIII &lt;- 
   data %&gt;%
   group_by(Tree_sp) %&gt;%
@@ -1675,9 +1675,9 @@ dataIIII</code></pre>
 ## 4 Persea macrantha         42</code></pre>
 <p><br></p>
 </div>
-<div id="piping-to-find-the-minimum-number-of-visits-of-seed-predators-in-a-night-per-tree-species" class="section level4">
-<h4>Piping to Find the Minimum Number of Visits of Seed Predators in a
-Night per Tree Species</h4>
+<div id="piping-to-find-the-minimum-number-of-trap-nights-of-seed-predators-per-tree-species" class="section level4">
+<h4>Piping to Find the Minimum Number of Trap Nights of Seed Predators
+per Tree Species</h4>
 <pre class="r"><code>dataV &lt;- 
   data %&gt;%
   group_by(Tree_sp) %&gt;%
@@ -1692,9 +1692,9 @@ dataV</code></pre>
 ## 4 Persea macrantha          4</code></pre>
 <p><br></p>
 </div>
-<div id="piping-to-find-the-total-visits-for-large-1-kg-and-small-bodied-1kg-seed-predators-per-tree-species" class="section level4">
+<div id="piping-to-find-the-total-visits-for-large-1-kg-and-small-bodied-1kg-seed-predator-visits-per-tree-species" class="section level4">
 <h4>Piping to Find the Total Visits for Large (&gt;1 kg) and Small
-Bodied (&lt;1kg) Seed Predators per Tree Species</h4>
+Bodied (&lt;1kg) Seed Predator Visits per Tree Species</h4>
 <pre class="r"><code>dataVI &lt;- 
   data %&gt;%
   group_by(Tree_sp, Body_size) %&gt;%
@@ -1716,9 +1716,9 @@ Bodied (&lt;1kg) Seed Predators per Tree Species</h4>
 ## 8 Persea macrantha      Small               87</code></pre>
 <p><br></p>
 </div>
-<div id="piping-to-find-the-total-number-of-seed-predators-per-tree-species" class="section level4">
-<h4>Piping to Find the Total Number of Seed Predators per Tree
-Species</h4>
+<div id="piping-to-find-the-total-trap-nights-of-seed-predator-visits-per-tree-species" class="section level4">
+<h4>Piping to Find the Total Trap Nights of Seed Predator Visits per
+Tree Species</h4>
 <pre class="r"><code>dataVII &lt;- 
   data %&gt;%
   group_by(Tree_sp) %&gt;%
@@ -1735,33 +1735,26 @@ dataVII</code></pre>
 and Myristica do not, for some reason.</p>
 <p><br></p>
 </div>
-</div>
-<div id="merging-some-of-the-organized-data-might-not-include-or-explain-why-it-doesnt-really-work" class="section level3">
-<h3>Merging Some of The Organized Data – might not include or explain
-why it doesn’t really work…</h3>
-<pre class="r"><code>v &lt;- merge(dataIII, dataIIII)
-v</code></pre>
-<pre><code>##                 Tree_sp Forest_type Number_of_trees Max
-## 1     Canarium strictum   Benchmark               2  65
-## 2     Canarium strictum   Fragments               4  65
-## 3        Heynea trijuga   Benchmark               4  54
-## 4        Heynea trijuga   Fragments               5  54
-## 5 Myristica dactyloides   Benchmark               4  27
-## 6 Myristica dactyloides   Fragments               4  27
-## 7      Persea macrantha   Benchmark               5  42
-## 8      Persea macrantha   Fragments               1  42</code></pre>
-<pre class="r"><code>w &lt;- merge(v, dataV)
-w</code></pre>
-<pre><code>##                 Tree_sp Forest_type Number_of_trees Max Min
-## 1     Canarium strictum   Benchmark               2  65  28
-## 2     Canarium strictum   Fragments               4  65  28
-## 3        Heynea trijuga   Benchmark               4  54   4
-## 4        Heynea trijuga   Fragments               5  54   4
-## 5 Myristica dactyloides   Benchmark               4  27   5
-## 6 Myristica dactyloides   Fragments               4  27   5
-## 7      Persea macrantha   Benchmark               5  42   4
-## 8      Persea macrantha   Fragments               1  42   4</code></pre>
+<div id="finding-the-mean-and-standard-deviation-of-seed-predator-visits-per-trap-night" class="section level4">
+<h4>Finding the Mean and Standard Deviation of Seed Predator Visits per
+Trap Night</h4>
+<pre class="r"><code>dataVIII &lt;- merge(dataVII, dataVI) #merge the data required
+dataVIII</code></pre>
+<pre><code>##                 Tree_sp Total Body_size Total_visits
+## 1     Canarium strictum   267     Large           64
+## 2     Canarium strictum   267     Small          122
+## 3        Heynea trijuga   159     Large           66
+## 4        Heynea trijuga   159     Small          320
+## 5 Myristica dactyloides    91     Large           38
+## 6 Myristica dactyloides    91     Small          187
+## 7      Persea macrantha   148     Large           25
+## 8      Persea macrantha   148     Small           87</code></pre>
 <p><br></p>
+</div>
+<div id="piping-to-find-the-mean-and-standard-deviation-of-seed-predator-visits-per-trap-night" class="section level4">
+<h4>Piping to Find the Mean and Standard Deviation of Seed Predator
+Visits per Trap Night</h4>
+</div>
 </div>
 </div>
 <div id="glmm-replication" class="section level1">
@@ -1856,7 +1849,7 @@ r2_nakagawa(glmmI) #use r2_nakagawa package to find the marginal and conditional
 ##   Conditional R2: 0.217
 ##      Marginal R2: 0.008</code></pre>
 <p>The marginal R2 for the mixed model is the same as published in the
-paper, however the conditional is not.</p>
+paper, however the conditional is not for some reason.</p>
 <p><br></p>
 </div>
 <div id="determine-the-confidence-intervals-for-the-glmm" class="section level4">
