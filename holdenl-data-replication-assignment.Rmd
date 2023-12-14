@@ -12,12 +12,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Loading the Required Packages
 ```{r message=FALSE, warning=FALSE}
-library(readr)
-library(ggplot2)
-library(dplyr)
-library(shiny)
-library(tidyverse)
-library(curl)
+library(readr) #reading csv documents
+library(ggplot2) #plotting data
+library(dplyr) #piping
+library(shiny) #aesthetics 
+library(tidyverse) #organizing data
+library(curl) #loading in data
 ```
 
 
@@ -48,12 +48,12 @@ head(my_data)
 ```{r}
 #Add Columns that Expresses Mean, Standard Deviation, Standard Error, Upper Limit, and Lower Limit and Organizes it by Tree Species and Forest Type
 new_data <- my_data %>%  
-  group_by(Tree_sp, Forest_type) %>%  
-  summarize(Distance_moved_means=mean(Distance_moved_m), sd_Distance_moved=sd(Distance_moved_m),  
+  group_by(Tree_sp, Forest_type) %>%  #organizing the data by Tree_sp and Forest_type
+  summarize(Distance_moved_means=mean(Distance_moved_m), sd_Distance_moved=sd(Distance_moved_m), #finding the mean and standard deviation
             N_N=n(),  
-            se=sd_Distance_moved/sqrt(N_N),  
-            upper_limit=Distance_moved_means+se,  
-            lower_limit=Distance_moved_means-se
+            se=sd_Distance_moved/sqrt(N_N),  #findinf the standard error for error bars
+            upper_limit=Distance_moved_means+se,  #finding the upper limit for error bars
+            lower_limit=Distance_moved_means-se #finding the lower limit for error bars
   )  
 head(new_data)
 ```
@@ -63,7 +63,7 @@ head(new_data)
 ### Plotting the Data
 ```{r warning=FALSE}
 g <- ggplot() + 
-geom_col(data = new_data, mapping = aes(x = Tree_sp, y = Distance_moved_means, group=Forest_type, fill = Forest_type), colour = "black", position = "dodge") +
+geom_col(data = new_data, mapping = aes(x = Tree_sp, y = Distance_moved_means, group=Forest_type, fill = Forest_type), colour = "black", position = "dodge") + #using dodge to ensure that the columns are not stacked
 geom_errorbar(data = new_data, aes(x=Tree_sp, ymin = lower_limit, ymax = upper_limit, fill= Forest_type), width=.2, position=position_dodge(.9)) 
 g
 ```
@@ -97,7 +97,7 @@ Because each column of data is organized differently, information will need to b
 dataIII <- 
   data %>%
   group_by(Tree_sp, Forest_type) %>%
-  summarize(Number_of_trees = n_distinct(Tree_id))
+  summarize(Number_of_trees = n_distinct(Tree_id)) #using n_distinct() to count how many trees in each species were fragments or benchmark
 dataIII
 ```
 
@@ -108,7 +108,7 @@ dataIII
 dataIIII <- 
   data %>%
   group_by(Tree_sp) %>%
-  summarize(Max = max(CT_trap_nights, na.rm=TRUE))
+  summarize(Max = max(CT_trap_nights, na.rm=TRUE)) #using max() to find the maximum number of trap nights per tree species
 dataIIII
 ```
 
@@ -119,7 +119,7 @@ dataIIII
 dataV <- 
   data %>%
   group_by(Tree_sp) %>%
-  summarize(Min = min(CT_trap_nights, na.rm=TRUE))
+  summarize(Min = min(CT_trap_nights, na.rm=TRUE)) #using min() to find the maximum number of trap nights per tree species
 dataV
 ```
 
@@ -130,7 +130,7 @@ dataV
 dataVI <- 
   data %>%
   group_by(Tree_sp, Body_size) %>%
-  summarize(Total_visits=sum(Num_visits))
+  summarize(Total_visits=sum(Num_visits)) #using sum() to find the total visits for large and small bodied seed predator visits per tree species 
 dataVI
 ```
 
@@ -141,7 +141,7 @@ dataVI
 dataVII <- 
   data %>%
   group_by(Tree_sp) %>%
-  summarize(Total=sum(unique(CT_trap_nights)))
+  summarize(Total=sum(unique(CT_trap_nights))) #using sum(unique()) to find the total number of trap nights per tree species
 dataVII
 ```
 Canarium and Persea match what was presented in the paper, but Heynea and Myristica do not, for some reason. 
@@ -152,7 +152,7 @@ Canarium and Persea match what was presented in the paper, but Heynea and Myrist
 
 #### Merging Data to Find the Mean Visits per Trap Night
 ```{r}
-dataVIII <- merge(dataVI, dataVII) #merge the data sets with total trap nights and total visits
+dataVIII <- merge(dataVI, dataVII) #merging the data sets with total trap nights and total visits
 dataVIII
 ```
 <br>
@@ -163,7 +163,7 @@ dataVIII
 dataVIIII <- 
   dataVIII %>%
   group_by(Tree_sp, Body_size) %>%
-  summarize(Mean=Total_visits/Total)
+  summarize(Mean=Total_visits/Total) #diving the total number of visits by the total number of trap nights
 dataVIIII
 ```
 The means calculated are all relatively close to that of the published paper, except for small-bodied Heynea trijuga. 
@@ -192,7 +192,7 @@ across forest type, the low marginal R2 indicates that
 ```{r}
 glmmdata <- 
 data %>%
-  group_by(Tree_sp, Forest_type) %>%
+  group_by(Tree_sp, Forest_type) %>% 
   reframe(Num_visits)
 glmmdata
 ```
@@ -220,7 +220,7 @@ summary(glmmI)
 ```{r warning=FALSE}
 #install.packages("performance")
 library(performance)
-r2_nakagawa(glmmI) #use r2_nakagawa package to find the marginal and conditional R2 values
+r2_nakagawa(glmmI) #using r2_nakagawa package to find the marginal and conditional R2 values
 ```
 
 The marginal R2 for the mixed model is the same as published in the paper, however the conditional is not for some reason. The small marginal R2, however is the indicator that the variation in invertebrate seed predation explained by forest type was limited. 
@@ -229,7 +229,7 @@ The marginal R2 for the mixed model is the same as published in the paper, howev
 
 #### Determine the Confidence Intervals for the GLMM
 ```{r}
-confint(glmmI) #use confint to find the confidence intervals of the glmm
+confint(glmmI) #using confint to find the confidence intervals of the glmm
 ```
 <br>
 
