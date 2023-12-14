@@ -170,6 +170,7 @@ The means calculated are all relatively close to that of the published paper, ex
 
 <br>
 
+
 # Replicating a GLMM   
 
 ```{r message=FALSE, warning=FALSE}
@@ -182,7 +183,8 @@ library(lme4) #load the lme4 package to use the glmer() function
 A GLMM with a poisson error structure examining the influence of forest type on the visitations of seed predators with tree species as a random variable was run using the offset() function to account for variable trap nights. 
 
 ![](img/GLMM.png)
-
+Although the difference in invertebrate predation was significant
+across forest type, the low marginal R2 indicates that 
 <br>
 <br>
 
@@ -221,7 +223,7 @@ library(performance)
 r2_nakagawa(glmmI) #use r2_nakagawa package to find the marginal and conditional R2 values
 ```
 
-The marginal R2 for the mixed model is the same as published in the paper, however the conditional is not for some reason. 
+The marginal R2 for the mixed model is the same as published in the paper, however the conditional is not for some reason. The small marginal R2, however is the indicator that the variation in invertebrate seed predation explained by forest type was limited. 
 
 <br>
 
