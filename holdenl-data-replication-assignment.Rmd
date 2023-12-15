@@ -12,12 +12,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Loading the Required Packages
 ```{r message=FALSE, warning=FALSE}
-library(readr) #reading csv documents
-library(ggplot2) #plotting data
-library(dplyr) #piping
-library(shiny) #aesthetics 
-library(tidyverse) #organizing data
-library(curl) #loading in data
+library(readr) 
+library(ggplot2) 
+library(dplyr) 
+library(tidyverse)
+library(curl) 
 ```
 
 
@@ -26,6 +25,8 @@ The published article, "Seed fates of four rainforest tree species in the fragme
 
 
 <br>
+
+***
 
 # Replicating a Figure 
 
@@ -36,7 +37,7 @@ The published article, "Seed fates of four rainforest tree species in the fragme
 <br>
 <br>
 
-### Curling in the Data 
+### Curling in the Data Set
 ```{r message=FALSE, warning=FALSE}
 f <- curl("https://raw.githubusercontent.com/lilliansoccer10/holdenl-data-replication-assignment/main/Distance_moved.csv")
 my_data <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
@@ -48,10 +49,10 @@ head(my_data)
 ```{r}
 #Add Columns that Expresses Mean, Standard Deviation, Standard Error, Upper Limit, and Lower Limit and Organizes it by Tree Species and Forest Type
 new_data <- my_data %>%  
-  group_by(Tree_sp, Forest_type) %>%  #organizing the data by Tree_sp and Forest_type
+  group_by(Tree_sp, Forest_type) %>%  #grouping the data by Tree_sp and Forest_type
   summarize(Distance_moved_means=mean(Distance_moved_m), sd_Distance_moved=sd(Distance_moved_m), #finding the mean and standard deviation
             N_N=n(),  
-            se=sd_Distance_moved/sqrt(N_N),  #findinf the standard error for error bars
+            se=sd_Distance_moved/sqrt(N_N),  #finding the standard error for error bars
             upper_limit=Distance_moved_means+se,  #finding the upper limit for error bars
             lower_limit=Distance_moved_means-se #finding the lower limit for error bars
   )  
@@ -60,15 +61,17 @@ head(new_data)
 
 <br>
 
-### Plotting the Data
+### Plotting the Data 
 ```{r warning=FALSE}
 g <- ggplot() + 
 geom_col(data = new_data, mapping = aes(x = Tree_sp, y = Distance_moved_means, group=Forest_type, fill = Forest_type), colour = "black", position = "dodge") + #using dodge to ensure that the columns are not stacked
-geom_errorbar(data = new_data, aes(x=Tree_sp, ymin = lower_limit, ymax = upper_limit, fill= Forest_type), width=.2, position=position_dodge(.9)) 
+geom_errorbar(data = new_data, aes(x=Tree_sp, ymin = lower_limit, ymax = upper_limit, fill= Forest_type), width=.2, position=position_dodge(.9)) #adding error bars using upper limit and lower limit determined earlier
 g
 ```
 
 <br>
+
+***
 
 # Replicating A Descriptive Statistical Analysis
 
@@ -77,7 +80,7 @@ g
 
 <br>
 
-### Curling in the Data
+### Curling in the Data Set
 ```{r message=FALSE, warning=FALSE}
 f <- curl("https://raw.githubusercontent.com/lilliansoccer10/holdenl-data-replication-assignment/main/Visits_seedpredators_CT.csv")
 data <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
@@ -86,7 +89,7 @@ head(data)
 <br>
 
 
-### Organizing The Data Set with Piping
+### Organizing The Data Set with Piping!
 
 Because each column of data is organized differently, information will need to be extracted individually: 
 
@@ -96,10 +99,11 @@ Because each column of data is organized differently, information will need to b
 ```{r}
 dataIII <- 
   data %>%
-  group_by(Tree_sp, Forest_type) %>%
+  group_by(Tree_sp, Forest_type) %>% #grouping the data by Tree_sp and Forest_type
   summarize(Number_of_trees = n_distinct(Tree_id)) #using n_distinct() to count how many trees in each species were fragments or benchmark
 dataIII
 ```
+The number of trees values match what was published in the article. 
 
 <br>
 
@@ -107,10 +111,11 @@ dataIII
 ```{r}
 dataIIII <- 
   data %>%
-  group_by(Tree_sp) %>%
+  group_by(Tree_sp) %>% #grouping the data by Tree_sp
   summarize(Max = max(CT_trap_nights, na.rm=TRUE)) #using max() to find the maximum number of trap nights per tree species
 dataIIII
 ```
+The max values match what was published in the article. 
 
 <br>
 
@@ -118,10 +123,11 @@ dataIIII
 ```{r}
 dataV <- 
   data %>%
-  group_by(Tree_sp) %>%
+  group_by(Tree_sp) %>% #grouping the data by Tree_sp
   summarize(Min = min(CT_trap_nights, na.rm=TRUE)) #using min() to find the maximum number of trap nights per tree species
 dataV
 ```
+The min values match what was published in the article. 
 
 <br>
 
@@ -129,10 +135,11 @@ dataV
 ```{r}
 dataVI <- 
   data %>%
-  group_by(Tree_sp, Body_size) %>%
+  group_by(Tree_sp, Body_size) %>% #grouping the data by Tree_sp and Body_size
   summarize(Total_visits=sum(Num_visits)) #using sum() to find the total visits for large and small bodied seed predator visits per tree species 
 dataVI
 ```
+The total visits for each body size matches what was published in the article. 
 
 <br>
 
@@ -140,11 +147,11 @@ dataVI
 ```{r}
 dataVII <- 
   data %>%
-  group_by(Tree_sp) %>%
+  group_by(Tree_sp) %>% #grouping the data by Tree_sp
   summarize(Total=sum(unique(CT_trap_nights))) #using sum(unique()) to find the total number of trap nights per tree species
 dataVII
 ```
-Canarium and Persea match what was presented in the paper, but Heynea and Myristica do not, for some reason. 
+Canarium and Persea match what was published in the article, but Heynea and Myristica do not, for some reason. 
 
 <br>
 
@@ -155,6 +162,7 @@ Canarium and Persea match what was presented in the paper, but Heynea and Myrist
 dataVIII <- merge(dataVI, dataVII) #merging the data sets with total trap nights and total visits
 dataVIII
 ```
+
 <br>
 
 
@@ -162,14 +170,15 @@ dataVIII
 ```{r}
 dataVIIII <- 
   dataVIII %>%
-  group_by(Tree_sp, Body_size) %>%
+  group_by(Tree_sp, Body_size) %>% #grouping the data by Tree_sp and Body_size
   summarize(Mean=Total_visits/Total) #diving the total number of visits by the total number of trap nights
 dataVIIII
 ```
-The means calculated are all relatively close to that of the published paper, except for small-bodied Heynea trijuga. 
+The means calculated are all relatively close to that of the published article, except for small-bodied Heynea trijuga. 
 
 <br>
 
+***
 
 # Replicating a GLMM   
 
@@ -183,22 +192,21 @@ library(lme4) #load the lme4 package to use the glmer() function
 A GLMM with a poisson error structure examining the influence of forest type on the visitations of seed predators with tree species as a random variable was run using the offset() function to account for variable trap nights. 
 
 ![](img/GLMM.png)
-Although the difference in invertebrate predation was significant
-across forest type, the low marginal R2 indicates that 
-<br>
+
+
 <br>
 
 #### Piping to Determine the Number of Visits Based Tree Species and Forest Type
 ```{r}
 glmmdata <- 
 data %>%
-  group_by(Tree_sp, Forest_type) %>% 
+  group_by(Tree_sp, Forest_type) %>%  #grouping the data by Tree_sp and Forest_type
   reframe(Num_visits)
 glmmdata
 ```
 <br>
 
-#### In order to get the offset() function to work properly, I had to turn CT_trap_nights into a separate vector:
+#### In order to get the offset() function to work properly, CT_trap_nights needs to be made into a separate vector:
 ```{r}
 Trap_nights <- data$CT_trap_nights
 Trap_nights
@@ -213,6 +221,8 @@ Trap_nights
 glmmI <- glmer(Num_visits~Forest_type + offset(log(Trap_nights)) + (1|Tree_sp), data=glmmdata, family = poisson(link = "log"))
 summary(glmmI)
 ```
+
+The intercept estimate and forest type: fragments is extremely close to the intercept published in the paper. In the paper, the intercept estimate is -1.89, and the forest type: fragments is 0.24. In the GLMM above, the intercept estimate is -1.26, and the forest type: fragments is 0.24. 
 
 <br>
 
@@ -231,6 +241,8 @@ The marginal R2 for the mixed model is the same as published in the paper, howev
 ```{r}
 confint(glmmI) #using confint to find the confidence intervals of the glmm
 ```
+The confidence intervals are all relatively close to those published in the article. In the published article, the lower confidence limit is -2.64, and the upper confidence limit is -1.19 for the intercept parameter. The lower confidence limit is 0.24 and -0.40 for the forest type: fragment interval. In the GLMM above, the lower confidence limit is -2.05, and the upper confidence limit is -0.48 for the intercept parameter. The lower confidence limit is 0.09 and 0.39 for the forest type: fragment interval.
+
 <br>
 
 #### References
